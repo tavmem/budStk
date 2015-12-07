@@ -10,7 +10,8 @@ mi(){H("mi\n");MZ[7]=MZ[13]=MZ[19]=MZ[25]=2;DO(30,MZ[i+1]+=MZ[i]*2)
 Z mmr(n,i){if(i<18)i=18;R err(2,n),tmp((MZ[i]+2)<<2),1;} /* Dan MZ[i+1]? */
 C *mab(m)unsigned m;{H("mab   ");
  I *p,*r,i=2,n=m;for(n=(n+3)>>4;n;n>>=1)++i;
- do{if(p=MM[i])R MM[i]=(I*)*p,(C*)p;for(n=i;n<30;)if(p=MM[++n]){
+ do{if(p=MM[i]){H("mab=>   ");R MM[i]=(I*)*p,(C*)p;}
+  for(n=i;n<30;)if(p=MM[++n]){
   for(MM[n]=(I*)*p,p[-1]=i;i<n;)r=p+MZ[--n],MM[r[-1]=n]=r,*r=0;H("mab=>   ");R(C*)p;}
   if(mc()>=i)continue;} while(mmr(m,i));}
 I *ma(m){R(I*)mab(m<<2);}

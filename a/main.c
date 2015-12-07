@@ -53,7 +53,9 @@ C **argv;
        i = parseargs(argc, argv);
        H("main->");
        ai(_workarea);                              /* initialize */
+       H("main->");
        versSet(VERSION);
+       H("main->");
        argvInstall(argc, argv, i);                 /* set up _argv */
        if (i < argc && argv[i] && * argv[i])
                loadafile(argv[i],0);               /* load script */
@@ -138,17 +140,17 @@ void argvInstall(argc, argv, offset)
 I argc;
 C **argv;
 I offset;
-{
+{ H("argvInstall   ");
   A aobj; V v; I i=0;
 
   if (argc < offset) { argv += argc; argc = 0; }
   else { argv += offset; argc -= offset; }
-  aobj = gv(Et, argc);
+  H("argvInstall->");aobj = gv(Et, argc);
   while (argc--) aobj->p[i++] = (I)gst(0, *argv++);
   v = vi(si("_argv"), Rx);
   if (v->a) dc(v->a);
   v->a = (I)aobj; v->t=0;
-  R;
+  H("argvInstall=>   ");R;
 }
 
 static void printId(void)

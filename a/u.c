@@ -82,15 +82,15 @@ Z rw(){H("rw   ");
  if(c=='&'){H("rw->");if(!isdi(*++s))R ML(0);n=*s++-'0';if(Y+n>=XY)trr(1);R ML(n-=X-Y);}
  if((n=c=='"')||c=='\'')R ++v,rq(c),*s=0,n=gsv(n+1,v),*s++=c,n;
  for(;*s=='`';s=cl(s)){s=s1(v=s);t[n++]=rs(v+1,0);}if(n)R gvs(Et,n,t);
- for(;H("rw->"),std(&s,d+n);s=c0(s))if(++n==9999)trr(1);
+ for(;H("rw->"),std(&s,d+n);H("rw->"),s=c0(s))if(++n==9999)trr(1);
  if(n){C c=*s;*s=0,y=strpbrk(v,".Ee"),*s=c;
   if(!y)DO(n,if(y=d[i]!=(t[i]=d[i])){q=0;break;})
   H("rw->");int res=gvs(y?Ft:It,n,y?(I*)d:t);H("rw=>   ");R res;}
  if(s=cl(s),n=isal(*s)){s=sy(v=s);n=rs(v,2);}if(*s=='.'&&isal(s[1])&&(QS(n)||!n))
   R s=sy(v=s+1),y=rs(v,2),QS(y)?MV(vi(XS(y),n?cxi(XS(n)):Rx)):trr(2,".");
  if(n)R n;if(*++s=='='||*s=='L')++s;R rs(v,1);}
-Z ra(k){
- H("ra   k:%ld   s:%s   tb: ",k,s); DO(5,H("%d ",tb[i]);)H("...\n");
+Z ra(k){H("ra   k:%ld   s:%s   tb: ",k,s);
+ DO(5,H("%d ",tb[i]);)H("...\n");
  r=s;t=tb;
  if(k)*t++='{';
  for(;*s;++t,H("ra->"),s=cl(s)){H("ra->");*t=rw();}
@@ -111,16 +111,16 @@ Z chk(){
  R res;
 }
 ff(a){H("ff->");if(Tf&&!qz(a))H("ff->"),paf(a,1),NL,tfl();H("ff=>   ");}
-Z bal(f){
+Z bal(f){H("bal   ");
  C c,b[999],*v=s;
  I i=0,j,k=0;
- for(;s=cl(s),c=*s;++s)switch(j=0,c){
+ for(;H("bal->"),s=cl(s),c=*s;++s)switch(j=0,c){
   case'"':CS('\'',if(!rq(c))brr(c))CS(';',if(!i){if(f)R;k=1;})
   case ')':++j;case ']':++j;CS('}',
    if(!i){if(f)R;brr(*s);}else if(b[--i]!="{[("[j])brr(b[i]))
   case '(':    case '[':    CS('{',if(i==999)trr(4);b[i++]=*s)}
   if(i)brr(b[i-1]);if(f)R;
- H("bal  f:%ld   s:%s   ",f,s); H("bal-res:%ld   bal=>",k);
+ H("f:%ld   s:%s   ",f,s); H("bal-res:%ld   bal=>   ",k);
  s=v; R k;
 }
 C *nx(t)C *t;{R s=t,bal(1),s;}
@@ -146,9 +146,9 @@ Z f1(f)FILE *f;{H("f1(u.c)   ");
 }
 Z go(){H("go   ");
  I r;
- for(;issp(*--s););
+ for(;H("go->"),issp(*--s););
  s[1]=0;
- s=cl(b=sb);H("sb:%s   s:%s   ",sb,s);
+ H("go->");s=cl(b=sb);H("sb:%s   s:%s   ",sb,s);
  if(!*s){H("goZa\n");R 0;}
  if((r=*s=='\373'||*s==':')||!s[1]&&(*s=='\375'||*s=='$')){
   H("goC: in-if\n");
@@ -181,14 +181,18 @@ perr(s){perror(s),fflush(stdout);}
 Z tok(){H("tok  b:%s\n",b);
  jmp_buf b;
  CX c=Cx;
- I *j=J,*k=K,z=setjmp(J=b)?0:ra(bal(0));
+ I *j=J,*k=K,z;
+ if(setjmp(J=b))z=0;
+ else {H("tok->");int bb=bal(0);H("tok->");z=ra(bb);}
  H("t:%p   *t:%ld   b:%s   tok-res:%ld   tok=>\n",t,*t,b,z);
- R K=k,Cx=c,J=j,z;}
+ R K=k,Cx=c,J=j,z;
+}
 ez(a){H("ez   ");
  jmp_buf b;I *j=J,*k=K,*x=X,*y=Y,i;CX c=Cx;
  if(i=setjmp(J=b)){Cx=c;
  for(J=j,K=k,X=x;Y<y;)dc(*Y++);R q?0:i!=-3?i:0;}
- R H("ez=>\n"),a=ev(a),J=j,a;}
+ R H("ez=>\n"),a=ev(a),J=j,a;
+}
 exm(a,m)C *a;{
  H("exm  *a:%s   m:%ld   s:%s   ",a,m,s);
  I e,z;
