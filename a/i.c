@@ -51,7 +51,7 @@ G3(g1){I(*f)()=ct(t),c,m=u,j,k=v,l=T(k),*p=tp,b=((C*)p)[-1]-1,bm=1<<b;
   if(f==cmf&&j!=(m=bm&f0(b,fh(CT1**(F*)w)))){
    for(h=(HH)p[m];h&&cmf(a+l*h->i,w,k);h=h->h);if(h&&h->i<*r)*r=h->i;}
   ++r;w+=l)}
-G3(c0){UC *t=a+u,*p,i=*t;DO(n,for(p=a,*t=*w++;*p!=*t;++p);*r++=p-q)*t=i;}
+G3(c0){H("c0   ");UC *t=a+u,*p,i=*t;DO(n,for(p=a,*t=*w++;*p!=*t;++p);*r++=p-q)*t=i;H("c0=>   ");}
 Z cT[256];G3(c1){I i;DO(256,cT[i]=u)for(i=u;i--;cT[a[i]]=i);DO(n,r[i]=cT[w[i]])}
 G2(I,i0){I *t=a+u,*p,i=*t;DO(n,for(p=a,*t=*w++;*p!=*t;++p);*r++=p-a)*t=i;}
 G2(I,i1){I j,k;DO(n,for(k=*w++,j=0;j<u&&a[j]!=k;++j);*r++=j)}

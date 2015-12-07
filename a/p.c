@@ -57,7 +57,7 @@ Z h(s)C *s;{if(APL&&b[1]=='-')b[1]='\242';strncpy(s,b,strlen(b));}
 
 Z C *iin[]={""," INf"," -Inf"," Na", " 0"};
 Z inf(x)F x;{R /*x==-999999999?3:*/iszero(x)?4:finite(x)?0:isnan(x)?3:x>0?1:2;}
-Z mfmt(b,s,x)C *b,*s;F x;{I i=inf(x);R i?strlen(strcpy(b,iin[i])):SH(x);}
+Z mfmt(b,s,x)C *b,*s;F x;{H("mfmt\n");I i=inf(x);R i?strlen(strcpy(b,iin[i])):SH(x);}
 Z dfmt(b,s,m,n,x)C *b,*s;F x;{I k,l,j=inf(x);if(!j)R(I)sprintf(b,s,m,n,x);
  if(4==j)R(I)sprintf(b,s,m,n,0.0);
  k=strlen(iin[j]);l=' '==*s;DO(m+l,b[i]=' ')strncpy(' '==*s?b:b+m-k,iin[j],k);}
@@ -65,36 +65,35 @@ Z dfmt(b,s,m,n,x)C *b,*s;F x;{I k,l,j=inf(x);if(!j)R(I)sprintf(b,s,m,n,x);
 A mj(a)A a;{P p;I m=0,j=a->t?2:1,l,k;C *s=a->t?Fs:" %d";p.i=a->p;DO(a->n,if(!a->t)k=SH(p.i[i]);
  else{l=mfmt(b,s,p.f[i]);k=l-bd();if(k>j)j=k<10?k:10;k=l-k;}if(k>m)m=k)R m+=3+--j,gf((F)m+(F)j/10);}
 
-H1(mth){
+H1(mth){H("mth   ");
  A z;XA;P p;C *s=at?Fs:" %d",*d;I j=0,k,m=0,n,l;
  if(at==Ct)R ic(a);
  if(at==Et){Q(ar||(a=(A)*a->p,!QF(a)),6)R gsv(0,!QA(a)?pp(a):a->t==Xt?"*derived*":(C*)a->p[a->n+1]);}
  p.i=a->p;
  n=ar?ad[--ar]:1;
- H("mthA  ");if(ar)H("have ar\n");else H("no ar\n");
+ if(ar)H("have ar\n");else H("no ar   ");
  if(ar)DO(an,BRK if(at){l=mfmt(b,s,p.f[i]);k=bd();if(k>j)j=k;k=l-k;}
                  else   k=SH(p.i[i]);if(k>m)m=k)
  else {
-  H("mthB  at:%ld   an:%ld   q:%ld   m+at:%ld\n",at,an,q,m+at);
+  H("at:%ld   an:%ld   q:%ld   m+at:%ld   ",at,an,q,m+at);
   DO(an,BRK m+=at?mfmt(b,s,p.f[i]):SH(p.i[i]))
  }
- H("mthZ\n");
  m+=j;
- W(ga(Ct,ar+1,ar?an*m:m,ad))z->d[ar]=ar?m*n:m;
+ H("mth->");W(ga(Ct,ar+1,ar?an*m:m,ad))z->d[ar]=ar?m*n:m;
  zr(z);
  d=(C*)z->p;
  if(ar)
   DO(an,at?(mfmt(b,s,*p.f++),h(d+j-bd())):h(d+m-SH(*p.i++));d+=m)
  else DO(an,k=at?mfmt(b,s,*p.f++):SH(*p.i++);h(d);d+=k)
- R(I)z;
+ H("mth-res:%ld   mth=>\n",(I)z);R(I)z;
 }
 
 paf(a,f)A a;{
- H("pafA  f:%d   q:%ld\n",f,q);
+ H("paf  ");
  I t;
  CX cx;
  BRK
- H("pafB  (M&(I)a):%ld\n",(M&(I)a));
+ H("f:%d   q:%ld   (M&(I)a):%ld   a->t:%ld\n",f,q,(M&(I)a),a->t);
  switch(M&(I)a){
   case 4:if(U(a)>9)goto L;
   case 2:
@@ -106,35 +105,37 @@ paf(a,f)A a;{
   case 0:
    if(!a)R;
    t=a->t;
-   H("pafC  a->t:%ld\n",a->t);
-   if(t>Et)R H("%s",t>Xt?(u?XS(*a->d)->n:(C*)a->p[a->n+1]):"*derived fn*");
+   if(t>Et)
+    R H("%s",t>Xt?(u?XS(*a->d)->n:(C*)a->p[a->n+1]):"*derived fn*");
    {I an=a->n,r=a->r,j=t==Et,n,k,d[9],*p;
     C *s;
     if(!an)R;
     if(!j){
-     H("pafD\n");
-     if(t!=Ct)dc(a=(A)mth(a));
-     H("pafE\n");
+     if(t!=Ct)H("paf->"),a=(A)mth(a),H("paf->"),dc(a);
      if(q)R 0;
      s=(C*)a->p,an=a->n,r=a->r;
     }
     else{
      p=a->p;
      if(r<2&&sym(a)){
-      DO(an,H(" `%s",XS(*p++)->n))R;}}
+      DO(an,H(" `%s",XS(*p++)->n))R;}
+    }
     if(r>1)for(mv(d,a->d,r),n=d[k=r-1];--k;)d[k]*=d[k+1];
     else n=r?an:1;
+    H("\n");
     for(;;){
      if(j)
       DO(
        n,H("< ");
        ++u;
+       H("pafZd\n");
        paf(*p++,f);
        --u;
        if(i<n-1||an>n)in())
      else DO(n,BRK PC(*s++))
-     if(!(an-=n))R;
-     for(k=r;--k&&!(an%d[k]);)in();}
+     if(!(an-=n)){H("   paf=>   ");R;}
+     for(k=r;--k&&!(an%d[k]);)in();
+    }
    }
  }
 }

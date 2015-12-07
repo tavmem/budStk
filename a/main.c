@@ -51,11 +51,13 @@ C **argv;
 
        printId(banner, copyright, version);
        i = parseargs(argc, argv);
+       H("main->");
        ai(_workarea);                              /* initialize */
        versSet(VERSION);
        argvInstall(argc, argv, i);                 /* set up _argv */
        if (i < argc && argv[i] && * argv[i])
                loadafile(argv[i],0);               /* load script */
+       H("main->getm\n");
        if (Tf) pr();                               /* initial prompt */
        for (;;) getm();                            /* main loop */
 }
@@ -170,5 +172,5 @@ void enable(){m|=1;}
 
 /* MAIN LOOP BODY */
 Z void getm(){I n=m;
- if(-1==select(32,&n,0,0,0)&&Tf)NL,sbi(),pr();else if (n&1)tf();}
+ if(-1==select(32,&n,0,0,0)&&Tf)NL,sbi(),pr();else if (n&1){H("getm->");tf();}}
 

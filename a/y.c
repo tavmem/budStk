@@ -43,7 +43,17 @@ loadafile(s,u) C *s;{         /* now a cover for doloadafile */
  if (0==rc)R perr(s);else free((void *) rc);
  R 0;}
 
-ai(n){sgi();mi();wi();if(!tmp(n<<20))R 0;ki();yInstall();nsfInstall();R 1;}
+ai(n){ H("ai   ");
+ H("ai->"); sgi();
+ H("ai->"); mi();
+ H("ai->"); wi();
+ H("ai->");
+ if(!tmp(n<<20))R 0;
+ H("ai->"); ki();
+ yInstall();
+ nsfInstall();
+ H("ai=>main   ");R 1;
+}
 mpi(s,i)C *s;{I z;C *t;Q(!s||i<0||i<2||!(t=mfi(s,i&1)),9)
  ERR(t,z=open(t,i&1?O_RDWR:O_RDONLY))R nmap(z,i);}
 Z pw(f,s,n)C *s;{I t;do t=write(f,s,n);while(s+=t,t!=-1&&(n-=t));fsync(f);R t;} /* IBM write fix */
@@ -86,8 +96,9 @@ C *cmdsList[]={"vars","fns", "ops","xfs","si","wa", "cx",  "rl",  "load",  "cd",
                "dbg", 0};
 Z C *ts[]={"0 off","1 on" "2 trace"};
 #define CF(i,f) CS(i,if(*s)R f=*s=='s'?2:*s=='1';H("%s\n",ts[f]);)
-sys(s)C *s;{C *v;S t;C c,d,*u,*w,*x;I f=0;A a;V q;
- v=strdup(s); s=cl(u=bl(v)),c=*u,*u=0,x=cl(w=bl(s)),d=*w,*w=0;
+sys(s)C *s;{H("sys   ");
+ C *v;S t;C c,d,*u,*w,*x;I f=0;A a;V q;
+ v=strdup(s); H("sys->"),s=cl(u=bl(v)),c=*u,*u=0,x=cl(w=bl(s)),d=*w,*w=0;
  switch(*v){case '|':++f,*w=d;case '>':++f;case '*':++f;case '<':vf(v+1,s,f);
    free(v);R;}
  switch(lu(v,cmdsList)){CS(16,xfs())CS(30,x_fs())CS(11,exit(0))CS(13,cxs())CS(9,loadafile(s,0))

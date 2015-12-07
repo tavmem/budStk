@@ -3,15 +3,24 @@ char what_a_k_c[] = "@(#) $Id: k.c,v 1.67 1993/04/30 00:54:13 atw Exp $";
 Z I MY[2001];Z struct _cx rx;CX Rx,Cx;I Xf;
 I nl,sq=2,q,(*g)(),*Y,*X,*XY,*K=MY;
 extern HT hti();
-ki(){A a;X=Y=XY=(K=MY)+2000,*X=*K=0,*++K=0,Cx=Rx=&rx,
- rx.s=(S)si(""),rx.n=0,rx.ht=hti(HTSIZE),a=gv(Et,0),a->c=0,nl=(I)a,te();}
+ki(){H("ki   ");A a; X=Y=XY=(K=MY)+2000,*X=*K=0,*++K=0,Cx=Rx=&rx,
+ rx.s=(S)si(""),rx.n=0,rx.ht=hti(HTSIZE),H("ki->");a=gv(Et,0),a->c=0,nl=(I)a,H("ki->");te();H("ki=>   ");}
 ic(a)A a;{R!QA(a)?(I)a:a->c?(++a->c,(I)a):im(a);}
-dc(a)A a;{
- if(QA(a)&&a)a->c?--a->c||dec(a):dm(a);
+dc(a)A a;{H("dc   ");if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):dm(a);H("dc=>   ");}
+dec(a)A a;{H("dec->");
+ if(a->t<Et){int res=mf(a);H("dec=>   ");R res;}
+ if(a->t==Et)DO(a->n,dc(a->p[i]))
+ else
+  if(a->t==Xt)DO(a->r,dc(a->d[i]))
+  else ef(*a->p),mf(a->p[a->n+1]);
+ mf(a);
 }
-dec(a)A a;{if(a->t<Et)R mf(a);if(a->t==Et)DO(a->n,dc(a->p[i]))else
- if(a->t==Xt)DO(a->r,dc(a->d[i]))else ef(*a->p),mf(a->p[a->n+1]);mf(a);}
-ef(a)I a;{E e;I n;if(!QE(a))R dc(a);e=XE(a);DO(e->n,ef(e->a[i]))ef(e->f),mf(e);}
+ef(a)I a;{H("ef   ");
+ E e;I n;
+ if(!QE(a)){H("ef->");int res=dc(a);H("ef=>   ");R res;}
+ e=XE(a);
+ DO(e->n,ef(e->a[i]))H("ef->"),ef(e->f),H("ef->"),mf(e);
+}
 I *tm(n){Z I *ta=0;if(ta)mf(ta);R ta=n?ma(n):0;}
 mv(d,s,n)I *d,*s;{DO(n,*d++=*s++)}
 C *tst(t,d,j,s,k,n)I *d,*s;{switch(t){
@@ -29,7 +38,7 @@ Z F f;Z C c=' ';C *zer(t,d,n){R trp(t,d,t==Ct?&c:t==Et?(C*)&nl:(C*)&f,n);}
 zr(a)A a;{zer(a->t,a->p,a->n);R(I)a;}
 I tr(r,d)I r,*d;{I n,*t;if(!r)R 1;for(t=d+r,n= *d;++d<t;n*= *d);R n;}
 tr1(r,d)I r,*d;{F s=1;I t;if(r<0)DO(-r,s*=*d)else DO(r,if(s*=t=*d++,t<0)R -1)R s>0x7FFFFFFF?-1:(I)s;}
-#define GA(_t,_r,_n,x) {I _f=_t==Ct;A z=(A)mab(_f+AH+Tt(_t,_n));z->c=1,z->t=_t,z->r=_r,z->n=_n;x;if(_f)((C*)z->p)[_n]=0;R z;}
+#define GA(_t,_r,_n,x) {I _f=_t==Ct;H("GA->");A z=(A)mab(_f+AH+Tt(_t,_n));z->c=1,z->t=_t,z->r=_r,z->n=_n;x;if(_f)((C*)z->p)[_n]=0;H("GA=>   ");R z;}
 A gm(t,m,n)GA(t,2,m*n,*z->d=m;z->d[1]=n)        A gv(t,n)GA(t,1,n,*z->d=n)
 A gd(t,a)A a;GA(t,a->r,a->n,mv(z->d,a->d,a->r)) A ga(t,r,n,d)GA(t,r,n,mv(z->d,d,r))
 A gc(t,r,n,d,p)GA(t,r,n,mv(z->d,d,r);tmv(t,z->p,p,n))
@@ -62,7 +71,8 @@ Z app(z,w)A *z,w;{A a=un(z);Q(!a->r,7){XA;XW,h=wr==ar,m=(h?*wd:1)+*ad,n=m*tr(--a
   if(AH+Tt(at,n)+(at==Ct)+4>4*MZ[255&((I*)a)[-1]])*z=ga(at,ar+1,n,ad-1),
     tmv(at,(*z)->p,a->p,an),dc(a),a=*z;
  tmv(at,((C*)a->p)+Tt(at,an),w->p,wn);R a->n=n,*a->d=m,(I)w;}}
-Z in(z,a,w,r)A*z,a,w;{A v;I j=(*z)->t;
+Z in(z,a,w,r)A*z,a,w;{H("in\n");
+ A v;I j=(*z)->t;
  if(j!=w->t&&(!(w=j==Ft?ep_cf(2):j==It?ci(2):(q=6,(A)0))))R 0;
  if(!a)R app(z,w);v=un(z); if(!r)R xr(v,a,w);
  if(j=w->n!=1){Q(w->r!=a->r,7)Q(cm(w->d,a->d,w->r),8)}

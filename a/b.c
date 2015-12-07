@@ -4,25 +4,29 @@ char what_a_b_c[] = "@(#) $Id: b.c,v 1.19 1992/12/03 20:47:01 atw Exp $";
 
 #include "k.h"
 I MZ[31]={1};Z I *MM[31];
-mi(){MZ[7]=MZ[13]=MZ[19]=MZ[25]=2;DO(30,MZ[i+1]+=MZ[i]*2)
- H("MZ: ");DO(31,H("%ld ",MZ[i])) H("\n");
+mi(){H("mi\n");MZ[7]=MZ[13]=MZ[19]=MZ[25]=2;DO(30,MZ[i+1]+=MZ[i]*2)
+ H("MZ: ");DO(31,H("%ld ",MZ[i])) H("mi=>\n");
 }
 Z mmr(n,i){if(i<18)i=18;R err(2,n),tmp((MZ[i]+2)<<2),1;} /* Dan MZ[i+1]? */
-C *mab(m)unsigned m;{I *p,*r,i=2,n=m;for(n=(n+3)>>4;n;n>>=1)++i;
+C *mab(m)unsigned m;{H("mab   ");
+ I *p,*r,i=2,n=m;for(n=(n+3)>>4;n;n>>=1)++i;
  do{if(p=MM[i])R MM[i]=(I*)*p,(C*)p;for(n=i;n<30;)if(p=MM[++n]){
-  for(MM[n]=(I*)*p,p[-1]=i;i<n;)r=p+MZ[--n],MM[r[-1]=n]=r,*r=0;R(C*)p;}
+  for(MM[n]=(I*)*p,p[-1]=i;i<n;)r=p+MZ[--n],MM[r[-1]=n]=r,*r=0;H("mab=>   ");R(C*)p;}
   if(mc()>=i)continue;} while(mmr(m,i));}
 I *ma(m){R(I*)mab(m<<2);}
-mf(p)I *p;{
- H("mfA   p:%p   *p:%ld\n",p,*p);
+mf(p)I *p;{H("mf   p:%p   *p:%ld   ",p,*p);
  I i=p[-1];
- H("mfB   i:%ld   ",i);if(i<32)H("(I)MM[i]:%ld",(I)MM[i]);H("\n");
+ H("i:%ld   ",i);if(i<32)H("(I)MM[i]:%ld",(I)MM[i]);H("\n");
  *p=(I)MM[i];
  MM[i]=p;
  H(" MM: ");DO(31,if(MM[i])H("%p ",MM[i]);else H("_ ");) H("\n");
- H("*MM: ");DO(31,if(MM[i])H("%ld ",*MM[i]);else H("_ ");) H("\n");
+ H("*MM: ");DO(31,if(MM[i])H("%ld ",*MM[i]);else H("_ ");) H("mf=>\n");
 }
-mb(p,n)I *p;{I i=31,j;for(n-=2,++p;i--;)if(j=MZ[i],j<=n)n-=j,*p=i,mf(p+1),p+=j;}
+mb(p,n)I *p;{H("mb\n");
+ I i=31,j;
+ //for(n-=2,++p;i--;)if(j=MZ[i],j<=n)n-=j,*p=i,mf(p+1),p+=j;
+ for(n-=2,++p;i--;)if(j=MZ[i],j<=n){n-=j;*p=i;H("mb->");mf(p+1);p+=j;}
+}
 mc(){R 0;}
 I *mz(){Z I b[31];I *p;DO(31,for(b[i]=0,p=MM[i];p;p=(I*)*p)++b[i])R b;}
 
