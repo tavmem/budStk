@@ -85,7 +85,7 @@ H1(mth){H("mth   ");
  if(ar)
   DO(an,at?(mfmt(b,s,*p.f++),h(d+j-bd())):h(d+m-SH(*p.i++));d+=m)
  else DO(an,k=at?mfmt(b,s,*p.f++):SH(*p.i++);h(d);d+=k)
- H("mth-res:%ld   mth=>\n",(I)z);R(I)z;
+ H("mth-res:%ld   mth=>   ",(I)z);R(I)z;
 }
 
 paf(a,f)A a;{

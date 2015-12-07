@@ -2,6 +2,7 @@ char what_a_m_c[] = "@(#) $Id: m.c,v 1.45 1993/04/23 15:49:28 atw Exp $";
 #include "f.h"
 #include <stdio.h>
 #include <signal.h>
+#include <string.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/types.h>
@@ -61,7 +62,7 @@ tmp(n){H("tmp   ");
 
 extern u_long MZ[];
 wa(k){I j,n=0,*p;tm(0);if(k>0)R tmp(k<<20);if(k==-2)mc();p=(I*)mz();
- DO(31,j=p[i];n+=j*MZ[i];if(k!=-1)H("%d ",j))if(k!=-1)H("n%u %u: ",tw,ep_all());H("%u\n",n<<2);}
+ DO(31,j=p[i];n+=j*MZ[i];if(k!=-1)H("%d ",j))if(k!=-1)H("n%u %u: ",tw,ep_all());H("%lu\n",n<<2);}
 
 twGet(){R tw;}
 ep_all(){I s=0;if(!j)R tw;DO(j,fstat(f[i],&b);s+=512*b.st_blocks)R s;}/*||*/

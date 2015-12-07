@@ -9,7 +9,7 @@ Z C *ps[]={"ws?","op?","var?","fn?","fninshed?","assign?","naked [?",
  "max # args 9","valence?",":header?","List too ling?","too many locals?"};
 Z prr(i,j){
  extern G;
- H("prrA  G:%ld\n",G);
+ H("prr(r.c)  i:%d  j:%d  G:%d\n",i,j,G);
  if(!G)if(H("PARSE "),i==2?pa(j):0,H(": %s\n",ps[i]),Qs)
  if(QS(Qs))H("%s\n",XS(Qs)->n);
  else sk(),dc(Qs);
@@ -118,12 +118,12 @@ Z re(){
  H("re->");a=rf();
  H("re->");if(!mr()){H("re-res:%ld   re=>   ",a);R a;}
  if(*t==MN(0))R as(a);
- if(y>1){H("reC->");prr(1);}
+ if(y>1){H("re1->   ");prr(1);}
  if(f=!y){
   f=rf();
-  if(y!=1){H("reD->");prr(2,a);}}
+  if(y!=1){H("re2->   ");prr(2,a);}}
   w=re();
- if(y){H("reE->");prr(3);}
+ if(y){H("re3->");prr(3);}
  R f?me(2,f,a,w):me(1,a,w);}
 Z in(s,b,r)I *b;{for(;r--;)if(b[r]==s)R 1;R 0;}
 Z lk(s,f)A f;{I i;if(!f)R 0;if(f->r>1)DO(f->r,if(f->d[i]==s)R ML(i))

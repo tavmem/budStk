@@ -184,7 +184,7 @@ Z tok(){H("tok  b:%s\n",b);
  I *j=J,*k=K,z;
  if(setjmp(J=b))z=0;
  else {H("tok->");int bb=bal(0);H("tok->");z=ra(bb);}
- H("t:%p   *t:%ld   b:%s   tok-res:%ld   tok=>\n",t,*t,b,z);
+ H("t:%p   *t:%ld   b:%s   tok-res:%ld   tok=>   ",t,*t,b,z);
  R K=k,Cx=c,J=j,z;
 }
 ez(a){H("ez   ");
