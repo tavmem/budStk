@@ -43,12 +43,11 @@ loadafile(s,u) C *s;{         /* now a cover for doloadafile */
  if (0==rc)R perr(s);else free((void *) rc);
  R 0;}
 
-ai(n){H("ai ");
+ai(n){H("ai n:%ld ",n);
  H("ai->"); sgi();
  H("ai->"); mi();
  H("ai->"); wi();
- H("ai->");
- if(!tmp(n<<20))R 0;
+ H("ai->"); if(!tmp(n<<20))R 0;
  H("ai->"); ki();
  yInstall();
  nsfInstall();

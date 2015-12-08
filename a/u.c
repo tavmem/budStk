@@ -71,7 +71,7 @@ Z rs(v,i)C *v;{I t=0;C c=*s;*s=0;if(i&&(*v=='\312'||(t=pi(v)))){
  if(c=='/'||c=='\\'||c=='.'&&!isan(s[1])){*s++=c;
   if(c=='.'&&*s&&!ispu(*s)&&!issp(*s))++s;c=*s,*s=0,t=pi(v);}if(!t)trr(2,v);}
  else{if(i==1)trr(2,v);t=MS(si(v));}R *s=c,t;}
-Z rq(c){while(*++s&&((c=='"'?*s=='\\':*s==c&&s[1]==c)?(I)++s:*s!=c));R *s;}
+Z rq(c){H("rq ");while(*++s&&((c=='"'?*s=='\\':*s==c&&s[1]==c)?(I)++s:*s!=c));H("rq=> ");R *s;}
 Z acp(d,s)C *d,*s;{C *t=d;for(;*d=*s;++d,++s)if(*s=='\'')++s;R d-t;}
 Z ccp(d,s)C *d,*s;{C *t=d;for(;*d=*s;++d,++s)if(*s=='\\')if(*++s=='n')*d=10;else
  if(!isdi(*s))*d=*s;else{I j=3,n=*s-'0';for(;isdi(*++s)&&--j;n=n*8+*s-'0');--s,*d=n;}R d-t;}
@@ -104,8 +104,8 @@ Z u,c,v;
 tfl(){/*ioctl?*/fflush(stdout);}
 pr(){q=0;DO(u+v,H("*"))H("     "),tfl();}
 Z chk(){
- H("chk "); if(c)H("have c\n");else H("no_c v:%ld s:%p s:%s",v,s,s);
- if(c)if(--s,!rq(c))R c;else --v,++s;
+ H("chk "); if(c)H("have_c ");else H("no_c ");
+ if(c){H("chk->");if(--s,!rq(c))R c;else --v,++s;}
  for(;H("chk->"),s=cl(s),c=*s;++s){if(c=='"'||c=='\'')if(!rq(c))R ++v;
   if(c=='{'||c=='(')++v; else if(c=='}'||c==')')--v;}  H("v:%ld s:%p s:%s ",v,s,s);
  int res=v<0?(v=0):v>0||s[-2]==':'; H("r:%d chk=> ",res);
@@ -122,19 +122,14 @@ Z bal(f){H("bal ");
   case '(':    case '[':    CS('{',if(i==999)trr(4);b[i++]=*s)}
   if(i)brr(b[i-1]);if(f)R;
  H("f:%ld s:%s ",f,s); H("r:%ld bal=> ",k);
- s=v; R k;
-}
+ s=v; R k;}
 C *nx(t)C *t;{R s=t,bal(1),s;}
 
-Z de(){
- H("de APL:%d s:%s\n",APL,s);H("de->");
- I a=exm(s,APL);
+Z de(){H("de de->"); I a=exm(s,APL);
  if(q==-1&&J)u--,longjmp(J,-1);
- q=0;
- if(a)H("de->"),ff(a),H("de->"),dc(a);
- tm(0);
- H("de=> ");
-}
+ q=0; if(a)H("de->"),ff(a),H("de->"),dc(a);
+ H("de->");tm(0);
+ H("de=> ");}
 
 Z EoF;Z C sb[99999],*b=sb;sbi(){b=sb,*b=c=v=0;}
 C *sj(s,j)C *s;{R strncpy(sb,s,j),sb[j]=0,sb;}
@@ -179,7 +174,7 @@ Z prr(i,a)A a;{q=0;i==2?H("%d",a):pa(QA(a)&&a&&a->t>=Xt?*a->d:(I)a);H(": %s\n",i
 C *qs;err(i,a){q=i;if(!Ef||G&&i)longjmp(J,-3);Tf=1;stdinFlagSet(Tf);prr(i,a);ui();R 0;}
 perr(s){perror(s),fflush(stdout);}
 
-Z tok(){H("tok  b:%s\n",b);
+Z tok(){H("tok ");
  jmp_buf b;
  CX c=Cx;
  I *j=J,*k=K,z;

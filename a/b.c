@@ -13,14 +13,14 @@ C *mab(m)unsigned m;{H("mab ");
   for(n=i;n<30;)if(p=MM[++n]){
   for(MM[n]=(I*)*p,p[-1]=i;i<n;)r=p+MZ[--n],MM[r[-1]=n]=r,*r=0;H("mab=> ");R(C*)p;}
   if(mc()>=i)continue;} while(mmr(m,i));}
-I *ma(m){R(I*)mab(m<<2);}
+I *ma(m){H("ma ma=>"); R(I*)mab(m<<2);}
 mf(p)I *p;{H("mf p:%p *p:%ld ",p,*p); I i=p[-1];
  H("i:%ld ",i);if(i<32)H("(I)MM[i]:%ld",(I)MM[i]);H("\n");
  *p=(I)MM[i]; MM[i]=p;
  H(" MM: ");DO(31,if(MM[i])H("%p ",MM[i]);else H("_ ");) H("\n");
  H("*MM: ");DO(31,if(MM[i])H("%ld ",*MM[i]);else H("_ ");) H("mf=>\n");}
-mb(p,n)I *p;{H("mb\n"); I i=31,j;
- for(n-=2,++p;i--;)if(j=MZ[i],j<=n)n-=j,*p=i,H("mb->"),mf(p+1),p+=j;}
+mb(p,n)I *p;{H("mb p:%p n:%d\n",p,n); I i=31,j;
+ for(n-=2,++p;i--;)if(j=MZ[i],j<=n)n-=j,*p=i,H("mb->"),mf(p+1),p+=j;H("mb=> ");}
 mc(){R 0;}
 I *mz(){Z I b[31];I *p;DO(31,for(b[i]=0,p=MM[i];p;p=(I*)*p)++b[i])R b;}
 
@@ -30,7 +30,7 @@ I *mz(){Z I b[31];I *p;DO(31,for(b[i]=0,p=MM[i];p;p=(I*)*p)++b[i])R b;}
 
 /* Buddy System Plus - A modification of the usual power
  * of two buddy system, which adds "leap" units to various
- * memory allocation sizes tin order to minimize the likelyhood 
+ * memory allocation sizes in order to minimize the likelyhood 
  * of either cache collisions and/or TLB collisions between
  * different memory cells.  The various parameters used in these
  * procedures depend critically on the memory configuration
@@ -90,7 +90,7 @@ static u_long zp_rs6000[MD] =
 static long *zm_rs6000 = (long *)(0xd0000000);
 
 /* 0   1    2   3   4   5   6   7   8    9   a   b   c   d   e   f */
-/* 6 workds every page */
+/* 6 works every page */
 /* 1 page every 128 pages (8k pages) */
 static u_long zp_Series5[MD] =
 {  0,  0,   0,  0,  0,  0,  0,  0,  0,   0,  0,  6,  0,  0,  0,  0,

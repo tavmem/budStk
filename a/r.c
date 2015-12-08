@@ -94,8 +94,7 @@ Z rl(f){
  y=0;
  if(!n&&f==MN(7)){R rlbf,nl;}
  if(QP(f)&&n!=1&&n!=2){rlbf;H("rlB->");prr(8);}R e=mm(n+2),e->f=f,mv(e->a,b,e->n=n),rlbf,ME(e);}
-Z rf(){
- H("\n\nrf ");
+Z rf(){H("\n\nrf(r.c) ");
  H("rf->");I a=rt(1),f;
  H("rf->");for(;mr()&&ty(f= *t)>1;y=1) if(++t,a=ty(f)==2?me(1,f,a):me(2,f,a,rt(1)),y>1)prr(1);
  H("y:%ld rf=> ",y);
@@ -131,7 +130,7 @@ Z rz(b)I *b;{H("rz "); I i;A f;
 }
 extern V sv();
 f0(s){A a=(A)sv(Cx,si(s))->e;if(a)H("%s\n",a->p[a->n=1]);}
-f1(s){I *l=sv(Cx,si(s))->l;for(;l;l=(I*)*l)H("%s ",((V)l[1])->s->n);NL;}
+f1(s){H("f1(u.c) ");I *l=sv(Cx,si(s))->l;for(;l;l=(I*)*l)H("%s ",((V)l[1])->s->n);H(" f1=> ");NL;}
 Z app(a,k)A a;{DO(a->n,if(a->p[i]==k)R)a->p[a->n]=k;a->n=++*a->d;}
 Z mrg(a,w)A a,w;{A z;I n=a->n;if(w&&w->t==Et&&w->n)w=(A)*w->p;if(!w||qz(w))R(I)nl;
  z=gv(It,n+w->n),tmv(It,z->p,a->p,n),*z->d=z->n=n;

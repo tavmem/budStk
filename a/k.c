@@ -14,12 +14,12 @@ dec(a)A a;{H("dec->");
   if(a->t==Xt)DO(a->r,dc(a->d[i]))
   else ef(*a->p),mf(a->p[a->n+1]);
  mf(a);}
-ef(a)I a;{H("ef   ");
- E e;I n;
+ef(a)I a;{H("ef   "); E e;I n;
  if(!QE(a)){H("ef->");int res=dc(a);H("ef=>   ");R res;}
  e=XE(a);
  DO(e->n,ef(e->a[i]))H("ef->"),ef(e->f),H("ef->"),mf(e);}
-I *tm(n){Z I *ta=0;if(ta)mf(ta);R ta=n?ma(n):0;}
+I *tm(n){H("tm "); Z I *ta=0; if(ta){H("tm->");mf(ta);}
+ if(n){H("tm->");ta=ma(n);} else ta=0; H("tm=> ");R ta;}
 mv(d,s,n)I *d,*s;{DO(n,*d++=*s++)}
 C *tst(t,d,j,s,k,n)I *d,*s;{switch(t){
  CS(It,DO(n,*d=*s;d+=j;s+=k)R(C*)d;)
