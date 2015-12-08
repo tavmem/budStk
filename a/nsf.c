@@ -326,10 +326,10 @@ A versGet()
 }
 
 void versSet(str) C *str;
-{ H("versSet    ");
+{ H("versSet ");
   if(versVal!=(A)0) dc(versVal);
   H("versSet->");versVal=(A)gsv(0,str);
-  H("versSet=>   ");R;
+  H("versSet=> ");R;
 }
 
 /*******************************************************************/

@@ -11,7 +11,7 @@ Z tr(t)struct timeval t;{R t.tv_sec*1000+10*(t.tv_usec/10000);}
 Z B ti(){Z struct rusage r;Z struct timeval tp;Z struct timezone tzp;B t;
  gettimeofday(&tp,&tzp),getrusage(RUSAGE_SELF,&r);
  R t.u=tr(r.ru_utime),t.s=tr(r.ru_stime),t.e=tr(tp)-e0,t;}
-te(){H("te   ");e0=ti().e;H("te=>   ");}
+te(){H("te ");e0=ti().e;H("te=> ");}
 Z B tz(x,y)B x,y;{B t;R t.u=x.u-y.u,t.s=x.s-y.s,t.e=x.e-y.e,t;}
 Z tw(z,t)B *z,t;{z->u+=t.u,z->s+=t.s,z->e+=t.e;}
 t2(n,i){B t;I*p=((A)ta->p[1])->p;if(i)++p[4*n];t0=tz(t=ti(),t0);

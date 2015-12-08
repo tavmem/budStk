@@ -43,7 +43,7 @@ loadafile(s,u) C *s;{         /* now a cover for doloadafile */
  if (0==rc)R perr(s);else free((void *) rc);
  R 0;}
 
-ai(n){ H("ai   ");
+ai(n){H("Aai ");
  H("ai->"); sgi();
  H("ai->"); mi();
  H("ai->"); wi();
@@ -52,7 +52,7 @@ ai(n){ H("ai   ");
  H("ai->"); ki();
  yInstall();
  nsfInstall();
- H("ai=>main   ");R 1;
+ H("ai=>main ");R 1;
 }
 mpi(s,i)C *s;{I z;C *t;Q(!s||i<0||i<2||!(t=mfi(s,i&1)),9)
  ERR(t,z=open(t,i&1?O_RDWR:O_RDONLY))R nmap(z,i);}

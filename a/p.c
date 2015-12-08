@@ -66,35 +66,27 @@ Z dfmt(b,s,m,n,x)C *b,*s;F x;{I k,l,j=inf(x);if(!j)R(I)sprintf(b,s,m,n,x);
 A mj(a)A a;{P p;I m=0,j=a->t?2:1,l,k;C *s=a->t?Fs:" %d";p.i=a->p;DO(a->n,if(!a->t)k=SH(p.i[i]);
  else{l=mfmt(b,s,p.f[i]);k=l-bd();if(k>j)j=k<10?k:10;k=l-k;}if(k>m)m=k)R m+=3+--j,gf((F)m+(F)j/10);}
 
-H1(mth){H("mth   ");
+H1(mth){H("mth ");
  A z;XA;P p;C *s=at?Fs:" %d",*d;I j=0,k,m=0,n,l;
  if(at==Ct)R ic(a);
  if(at==Et){Q(ar||(a=(A)*a->p,!QF(a)),6)R gsv(0,!QA(a)?pp(a):a->t==Xt?"*derived*":(C*)a->p[a->n+1]);}
  p.i=a->p;
  n=ar?ad[--ar]:1;
- if(ar)H("have ar\n");else H("no ar   ");
+ if(ar)H("have ar\n");else H("no_ar ");
  if(ar)DO(an,BRK if(at){l=mfmt(b,s,p.f[i]);k=bd();if(k>j)j=k;k=l-k;}
                  else   k=SH(p.i[i]);if(k>m)m=k)
- else {
-  H("at:%ld   an:%ld   q:%ld   m+at:%ld   ",at,an,q,m+at);
-  DO(an,BRK m+=at?mfmt(b,s,p.f[i]):SH(p.i[i]))
- }
+ else{
+  H("at:%ld an:%ld q:%ld m+at:%ld ",at,an,q,m+at);
+  DO(an,BRK m+=at?mfmt(b,s,p.f[i]):SH(p.i[i]))}
  m+=j;
  H("mth->");W(ga(Ct,ar+1,ar?an*m:m,ad))z->d[ar]=ar?m*n:m;
- zr(z);
- d=(C*)z->p;
+ zr(z); d=(C*)z->p;
  if(ar)
   DO(an,at?(mfmt(b,s,*p.f++),h(d+j-bd())):h(d+m-SH(*p.i++));d+=m)
  else DO(an,k=at?mfmt(b,s,*p.f++):SH(*p.i++);h(d);d+=k)
- H("mth-res:%ld   mth=>   ",(I)z);R(I)z;
-}
+ H("r:%ld mth=> ",(I)z);R(I)z;}
 
-paf(a,f)A a;{
- H("paf  ");
- I t;
- CX cx;
- BRK
- H("f:%d   q:%ld   (M&(I)a):%ld   a->t:%ld\n",f,q,(M&(I)a),a->t);
+paf(a,f)A a;{H("paf "); I t; CX cx; BRK H("f:%d q:%ld (M&(I)a):%ld a->t:%ld ",f,q,(M&(I)a),a->t);
  switch(M&(I)a){
   case 4:if(U(a)>9)goto L;
   case 2:

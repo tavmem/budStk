@@ -140,7 +140,7 @@ void argvInstall(argc, argv, offset)
 I argc;
 C **argv;
 I offset;
-{ H("argvInstall   ");
+{ H("argvInstall ");
   A aobj; V v; I i=0;
 
   if (argc < offset) { argv += argc; argc = 0; }
@@ -150,7 +150,7 @@ I offset;
   v = vi(si("_argv"), Rx);
   if (v->a) dc(v->a);
   v->a = (I)aobj; v->t=0;
-  H("argvInstall=>   ");R;
+  H("argvInstall=> ");R;
 }
 
 static void printId(void)

@@ -48,17 +48,17 @@ Z f[9],j,k;Z C z[]="/var/atmp/0/aXXXXXX",c[]="/var/atmp/0";
 flen(f,n){R ftruncate(f,n);}
 Z mkt(b)C *b;{H("mkt\n");I f=mkstemp(b);unlink(b);strcpy(b+strlen(b)-6,"xxxxxx");
  R fcntl(f,F_SETFD,1|fcntl(f,F_GETFD,0)),f;}
-wi(){H("wi   ");
- for(;!access(c,6);z[10]=c[10]='0'+ ++j){H("wi->");f[j]=mkt(z);}H("wi=>   ");
+wi(){H("wi ");
+ for(;!access(c,6);z[10]=c[10]='0'+ ++j){H("wi->");f[j]=mkt(z);}H("wi=> ");
 }
 #define mapf(f,o) (I)mmap(k1,k2,PROT_READ|PROT_WRITE,MAP_SHARED|MAP_FIXED,f,0)
 Z wsm(m){I p=k1,z=(k+m+j-1)/j*k2;DO(j,flen(f[i],z))
  DO(m,if(-1==mapf(f[k%j],k2*(k/j)))R -1;++k;k1+=k2)R p;}
 Z mal(n){I p=(I)malloc(n);if(!p)perr("malloc");R p;}
 Z tw;
-tmp(n){H("tmp   ");
+tmp(n){H("tmp ");
  I m,p=j||k?(m=1+(n-1)/k2,n=m*k2,wsm(m)):mal(n);
- H("tmp->");tw+=n;int res=p?(mb(p,n>>2),1):0;H("tmp=>   ");R res;}
+ H("tmp->");tw+=n; int res=p?(mb(p,n>>2),1):0;H("tmp=> ");R res;}
 
 extern u_long MZ[];
 wa(k){I j,n=0,*p;tm(0);if(k>0)R tmp(k<<20);if(k==-2)mc();p=(I*)mz();
