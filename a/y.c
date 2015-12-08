@@ -43,7 +43,7 @@ loadafile(s,u) C *s;{         /* now a cover for doloadafile */
  if (0==rc)R perr(s);else free((void *) rc);
  R 0;}
 
-ai(n){H("Aai ");
+ai(n){H("ai ");
  H("ai->"); sgi();
  H("ai->"); mi();
  H("ai->"); wi();
