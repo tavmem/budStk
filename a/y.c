@@ -95,7 +95,7 @@ C *cmdsList[]={"vars","fns", "ops","xfs","si","wa", "cx",  "rl",  "load",  "cd",
                "dbg", 0};
 Z C *ts[]={"0 off","1 on" "2 trace"};
 #define CF(i,f) CS(i,if(*s)R f=*s=='s'?2:*s=='1';H("%s\n",ts[f]);)
-sys(s)C *s;{H("sys   ");
+sys(s)C *s;{H("sys ");
  C *v;S t;C c,d,*u,*w,*x;I f=0;A a;V q;
  v=strdup(s); H("sys->"),s=cl(u=bl(v)),c=*u,*u=0,x=cl(w=bl(s)),d=*w,*w=0;
  switch(*v){case '|':++f,*w=d;case '>':++f;case '*':++f;case '<':vf(v+1,s,f);
@@ -113,7 +113,8 @@ sys(s)C *s;{H("sys   ");
   CS(31,dbg(s,x))
   CS(23,Tf=0;disable()) CS(20,for(;cmdsList[f];++f)H(" %s",cmdsList[f]);NL)
   CS(28,lst(-1,s)) 
-  default:*u=c,*w=d;syst(v);}free(v);R;}
+  default:*u=c,*w=d;syst(v);}
+  free(v);H("sys=> ");R;}
 Z H1(c_i){A z;Q(a->t!=Ct&&a->n,6)W(gd(It,a))DO(a->n,z->p[i]=((UC*)a->p)[i])R(I)z;}
 Z H1(i_c){A z;Q(a->t!=It&&a->n,6)W(gd(Ct,a))DO(a->n,((C*)z->p)[i]=a->p[i])R(I)z;}
 H1(i_f){A z;Q(a->t!=It&&a->n,6)W(gd(Ft,a))DO(a->n,((F*)z->p)[i]=a->p[i])R(I)z;}

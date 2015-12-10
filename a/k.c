@@ -6,7 +6,7 @@ extern HT hti();
 ki(){H("ki ");A a; X=Y=XY=(K=MY)+2000,*X=*K=0,*++K=0,Cx=Rx=&rx,
  rx.s=(S)si(""),rx.n=0,rx.ht=hti(HTSIZE),H("ki->");a=gv(Et,0),a->c=0,nl=(I)a,H("ki->");te();H("ki=> ");}
 ic(a)A a;{R!QA(a)?(I)a:a->c?(++a->c,(I)a):im(a);}
-dc(a)A a;{H("dc ");if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):dm(a);H("dc=> ");}
+dc(a)A a;{H("dc ");if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):H("dc->"),dm(a);H("dc=> ");}
 dec(a)A a;{H("dec->");
  if(a->t<Et){int res=mf(a);H("dec=> ");R res;}
  if(a->t==Et)DO(a->n,dc(a->p[i]))
@@ -14,8 +14,8 @@ dec(a)A a;{H("dec->");
   if(a->t==Xt)DO(a->r,dc(a->d[i]))
   else ef(*a->p),mf(a->p[a->n+1]);
  mf(a);}
-ef(a)I a;{H("ef   "); E e;I n;
- if(!QE(a)){H("ef->");int res=dc(a);H("ef=>   ");R res;}
+ef(a)I a;{H("ef "); E e;I n;
+ if(!QE(a)){H("ef->");int res=dc(a);H("ef=> ");R res;}
  e=XE(a);
  DO(e->n,ef(e->a[i]))H("ef->"),ef(e->f),H("ef->"),mf(e);}
 I *tm(n){H("tm "); Z I *ta=0; if(ta){H("tm->");mf(ta);}
@@ -42,16 +42,16 @@ A gd(t,a)A a;GA(t,a->r,a->n,mv(z->d,a->d,a->r)) A ga(t,r,n,d)GA(t,r,n,mv(z->d,d,
 A gc(t,r,n,d,p)GA(t,r,n,mv(z->d,d,r);tmv(t,z->p,p,n))
 A gi(i)I i;GA(It,0,1,*z->p=i)A gs(t)GA(t,0,1,1) A gf(f)F f;GA(Ft,0,1,*(F*)z->p=f)
 
-#define EV(z) {I t;switch(M&z){CS(0,ic(z))CS(3,z=ee(XE(z)))\
- CS(1,ic(z=gt(XV(z))))CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}}
-I ev(z){if(q)err(q,QE(z)?XE(z)->f:z);EV(z) R z;}
+#define EV(z) {H("EV ");I t;switch(M&z){CS(0,ic(z))CS(3,H("EV->");z=ee(XE(z)))\
+ CS(1,ic(z=gt(XV(z))))CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}H("EV=> ");}
+I ev(z){H("ev ");if(q)err(q,QE(z)?XE(z)->f:z);H("ev->");EV(z) H("ev=> ");R z;}
 extern PX(),(*PN[])(),(*P1[])(),(*P2[])();
-I ee(e)E e;{I z,i,n,f=e->f;if(QN(f))R(*PN[U(f)])(e);
- for(i=n=e->n;i;*--Y=z){z=e->a[--i];EV(z)}EV(f)
- if(QA(f)){++n;*--Y=f;if(((A)f)->t>Xt+1)R z=(I)ga(Xt,n,0L,Y),Y+=n,z;z=af(n);}
+I ee(e)E e;{H("ee ");I z,i,n,f=e->f;if(QN(f))R(*PN[U(f)])(e);
+ for(i=n=e->n;i;*--Y=z){z=e->a[--i];H("ee->");EV(z)}H("ee->");EV(f)
+ if(QA(f)){++n;*--Y=f;if(((A)f)->t>Xt+1)z=(I)ga(Xt,n,0L,Y),Y+=n,z;z=af(n);H("ee=> ");R z;}
  else{i=U(f);
   EQ(0,QX(f)?(i?PX(i,n):xin(*Y,n-1,0)):n==2?(*P2[i])(*Y,Y[1],i):(*P1[i])(*Y,i))}
- DO(n,dc(*Y++))R z;}
+ DO(n,H("ee->");dc(*Y++))H("ee=> ");R z;}
 I fa(f,a,w){I z,i,n=w?2:1;if(w)*--Y=w;*--Y=a;if(QA(f))ic(*--Y=f),z=af(++n);
  else{i=U(f);EQ(0,QX(f)?PX(i,n):n==2?(*P2[i])(*Y,Y[1],i):(*P1[i])(*Y,i))}
  DO(n,dc(*Y++))R z;}

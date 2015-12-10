@@ -98,8 +98,7 @@ Z ra(k){H("ra k:%ld s:%s tb:",k,s);
  for(;*s;++t,H("ra->"),s=cl(s)){H("ra->");*t=rw();}
  if(k)*t++='}';
  *t=0;  H("tb:"); DO(5,H(" %d",tb[i]);)H("... ");
- H("ra->");int res=rd(tb);H("ra=> ");R res;
-}
+ H("ra->");int res=rd(tb);H("ra=> ");R res;}
 Z u,c,v;
 tfl(){/*ioctl?*/fflush(stdout);}
 pr(){q=0;DO(u+v,H("*"))H("     "),tfl();}
@@ -109,9 +108,8 @@ Z chk(){
  for(;H("chk->"),s=cl(s),c=*s;++s){if(c=='"'||c=='\'')if(!rq(c))R ++v;
   if(c=='{'||c=='(')++v; else if(c=='}'||c==')')--v;}  H("v:%ld s:%p s:%s ",v,s,s);
  int res=v<0?(v=0):v>0||s[-2]==':'; H("r:%d chk=> ",res);
- R res;
-}
-ff(a){H("ff->");if(Tf&&!qz(a))H("ff->"),paf(a,1),NL,tfl();H("ff=>   ");}
+ R res;}
+ff(a){H("ff->");if(Tf&&!qz(a))H("ff->"),paf(a,1),NL,tfl();H("ff=> ");}
 Z bal(f){H("bal ");
  C c,b[999],*v=s;
  I i=0,j,k=0;
@@ -125,7 +123,7 @@ Z bal(f){H("bal ");
  s=v; R k;}
 C *nx(t)C *t;{R s=t,bal(1),s;}
 
-Z de(){H("de de->"); I a=exm(s,APL);
+Z de(){H("de \n\nde->"); I a=exm(s,APL);
  if(q==-1&&J)u--,longjmp(J,-1);
  q=0; if(a)H("de->"),ff(a),H("de->"),dc(a);
  H("de->");tm(0);
@@ -140,23 +138,21 @@ Z f1(f)FILE *f;{H("f1(u.c) ");
  int res= n==strlen(b)+1?(H("buffer full\n"),sbi()):(s=b,H("f1->"),chk()?(b=s,1):0);
  H("r:%d f1=> ",res);R res;
 }
-Z go(){H("go ");
- I r;
+Z go(){H("go "); I r;
  for(;H("go->"),issp(*--s););
  s[1]=0;
  H("go->");s=cl(b=sb);H("sb:%s s:%s ",sb,s);
  if(!*s){H("goZa\n");R 0;}
  if((r=*s=='\373'||*s==':')||!s[1]&&(*s=='\375'||*s=='$')){
   H("goC: in-if\n");
-  if(!J){H("goZb\n");R u;}
+  if(!J){H("go=> ");R u;}
   if(r){
    if(!s[1])R 1;
    r=exm(s+1,APL);
    if(!r)R q=0;}
   --u,longjmp(J,r?r:-3);}
- H("go->"); R de(),0;
-}
-Z C *scp(s)C *s;{H("scp->");C *res=strcpy(mab(1+strlen(s)),s);H("scp=>   ");R res;}
+ R H("go->"),de(),H("go=> "),0; }
+Z C *scp(s)C *s;{H("scp->");C *res=strcpy(mab(1+strlen(s)),s);H("scp=> ");R res;}
 rf(s,f)C *s;{if(s)*++K=MV(s=scp(s)),*++K=-1;
  for(;;){if(!f1(f))if(EoF||go())break;if(s)--*K;}
  if(c||v)H("%s OPEN %c\n",b,c?c:'{'),c=v=0;if(s)K-=2,mf(s);}
@@ -182,26 +178,23 @@ Z tok(){H("tok ");
  else {H("tok->");int bb=bal(0);H("tok->");z=ra(bb);}
  H("t:%p *t:%ld b:%s z:%ld tok=> ",t,*t,b,z);
  R K=k,Cx=c,J=j,z;}
-ez(a){H("ez   ");
+ez(a){H("ez ");
  jmp_buf b;I *j=J,*k=K,*x=X,*y=Y,i;CX c=Cx;
  if(i=setjmp(J=b)){Cx=c;
  for(J=j,K=k,X=x;Y<y;)dc(*Y++);R q?0:i!=-3?i:0;}
- R H("ez=>\n"),a=ev(a),J=j,a;}
-exm(a,m)C *a;{
- H("exm *a:%s m:%ld s:%s ",a,m,s);
- I e,z;
+ R H("ez->"),a=ev(a),J=j,H("ez=> "),a;}
+exm(a,m)C *a;{ H("exm *a:%s m:%ld s:%s ",a,m,s); I e,z;
  H("exm->");s=cl(a);
- if(*s=='$')R sys(s+1),nl;
- if(!*s)R nl;
+ if(*s=='$')R H("exm->"),sys(s+1),H("exm=> "),nl;
+ if(!*s)R H("exm=> "),nl;
  Q(Y-K<30,3)
- H("exm->");
- z=APL,APL=m,e=tok(),APL=z;
+ z=APL,APL=m,H("exm->"),e=tok(),APL=z;
  Q(!e,15)
- H("exm->");
- *++K=MS(a=scp(a)),H("exm->"),z=ez(e),H("exm->"),mf(a),K--,H("exm->"),ef(e);
- if(!z){if(!q)q=9;H("exmZa\n");R 0;}
- H("r:%ld exm=>\n",z);
- R QE(e)&&XE(e)->f==MN(0)?(dc(z),nl):z;
+ H("exm->");*++K=MS(a=scp(a)),H("exm->"),z=ez(e),H("exm->"),mf(a),K--,H("exm->"),ef(e);
+ if(!z){if(!q)q=9;H("exm=> ");R 0;}
+ if(QE(e)&&XE(e)->f==MN(0))R H("exm->"),dc(z),H("exm=> \n\n"),nl;
+ else R H("r:%ld exm=> \n\n",z),z;
+
 }
 extern I Gf,Sf;pev(a){I g=G;A z;G=Gf,a=ez(a),G=g;if(!a&&!q)longjmp(J,-3);
  z=gv(Et,2);*z->p=(I)gi(q);z->p[1]=q?gsv(0,q<0?qs:es[q]):a;R q=0,(I)z;}

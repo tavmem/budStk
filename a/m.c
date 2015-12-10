@@ -38,9 +38,9 @@ Z mchk(n,a)A a;{I t=(I)a!=-1&&!a->c&&(t=a->t)<=Ct&&n>=AH+T(a->n);
  if(!t)H("not an `a object\n");R t;}
 #define MM 2000
 typedef struct{I a,c,n,w;}L;Z L mt[MM];Z mm=0;lds(){}
-Z L *ml(a){DO(mm,if(mt[i].a==a)R mt+i)R 0;}wr(a){L *p=ml(a);R p?p->w:0;}
+Z L *ml(a){H("ml ");DO(mm,if(mt[i].a==a){H("ml=> ");R mt+i;})H("ml=> ");R 0;}wr(a){L *p=ml(a);H("ml=> ");R p?p->w:0;}
 im(a){L *p=ml(a);if(p)++p->c;R a;}
-dm(a){H("dm\n");L *p=ml(a);if(p&&!--p->c)munmap(a,p->n),p->a=0;}
+dm(a){H("dm ");H("dm->");L *p=ml(a);if(p&&!--p->c)munmap(a,p->n),p->a=0;H("dm=> ");}
 nmap(a,i){L *p=ml(0);I n=lseek(a,0,2);Q(!mchk(n,a=map(a,i)),9)
  if(!p){if(mm==MM)R H("maplim\n"),q=9,0;p=mt+mm++;}R p->c=1,p->n=n,p->w=i,p->a=a;}
 Z f[9],j,k;Z C z[]="/var/atmp/0/aXXXXXX",c[]="/var/atmp/0";

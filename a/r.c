@@ -17,10 +17,9 @@ Z prr(i,j){
  else sk(),dc(Qs);
  for(;*r;)mf(*r--);
  tc(r);}
-Z E mm(n){
- if(*++r=(I)ma(n))R(E)*r;
- H("mm->");
- --r,prr(0);}
+Z E mm(n){H("mm ");
+ H("mm->");if(*++r=(I)ma(n)){H("mm=> ");R(E)*r;}
+ H("mm->"); --r,prr(0); H("mm=> ");}
 
 unsigned long hafn(unsigned long key){R key^key>>11;}
 #define HTHASH(ht,s) ((ht)->b+(((ht)->nb-1)&hafn(((unsigned)(s))>>3)))
@@ -42,7 +41,7 @@ CX cx(s)C *s;{R *s!='.'?cxi(si(s)):Rx;}
 gz(){R nl;}
 qz(a)A a;{
  int res=QA(a)&&a->t==Et&&!a->n;
- H("qz   a->t:%ld   Et:%ld   a->n:%ld   qz-res:%d   qz=>\n",a->t,Et,a->n,res);
+ H("qz   a->t:%ld   Et:%ld   a->n:%ld   qz-res:%d   qz=> ",a->t,Et,a->n,res);
  R res; }
 #define ELSE MN(1)
 ty(a){ H("ty ");I t;
@@ -60,8 +59,12 @@ ty(a){ H("ty ");I t;
  if(!a){H("ty=> ");R t;}
  else if(a==1&&t>1||a==2&&t==4){H("ty=> ");R 1;}
       else{H("ty=> ");R 0;} }
-Z me(n,f,a,b,c){E e=mm(n+2);e->n=n,e->f=f,*e->a=a;if(n>1)e->a[1]=b;if(n>2)e->a[2]=c;
- R QP(a)&&(f==MN(8)&&QA(b)||f==MN(9)&&a!=MP(74))?(a=ee(e),*r=a,ef(ME(e)),a):ME(e);}
+Z me(n,f,a,b,c){H("me ");
+ H("me->");E e=mm(n+2);
+ e->n=n,e->f=f,*e->a=a;
+ if(n>1)e->a[1]=b;
+ if(n>2)e->a[2]=c;
+ H("me=> ");R QP(a)&&(f==MN(8)&&QA(b)||f==MN(9)&&a!=MP(74))?(H("me->"),a=ee(e),*r=a,ef(ME(e)),a):ME(e);}
 Z mr(){H("mr "); int r= *t&&*t!=';'&&*t!=')'&&*t!=']'&&*t!='}'&&*t!=ELSE; H("mr=> ");R r;}
 Z rt(g){H("rt ");I f,a,b,c=0;
  H("rt->");if(!mr()){H("rtB->");prr(4);}
@@ -101,11 +104,11 @@ Z rl(f){
  y=0;
  if(!n&&f==MN(7)){R rlbf,nl;}
  if(QP(f)&&n!=1&&n!=2){rlbf;H("rlB->");prr(8);}R e=mm(n+2),e->f=f,mv(e->a,b,e->n=n),rlbf,ME(e);}
-Z rf(){H("rf(r.c)\n");H("rf->");I a=rt(1),f;
+Z rf(){H("rf(r.c) ");H("rf->");I a=rt(1),f;
  H("rf->");I r1=mr(); H("rf->");I r2=ty(f= *t); for(;r1&&r2>1;y=1)
   if(++t,a=ty(f)==2?me(1,f,a):me(2,f,a,rt(1)),y>1)prr(1);
  if(*t=='{'&&(!QN(a)||MN(6)==a)){H("rf->");int r3=rl(a); H("rf=>\n");R r3;}
- else {H("rf=>\n");R a;} }
+ else {H("rf=> ");R a;} }
 Z vs(e)E e;{DO(e->n,if(!vl(e->a[i]))R 0)R 1;}
 peak(f){E e=XE(f);R QE(f)&&e->f==MN(9)&&*e->a==MP(74);}
 Z as(a){H("as "); I z;E e;
@@ -114,17 +117,17 @@ Z as(a){H("as "); I z;E e;
  ++t,z=me(2,MN(0),a,re());
  if(QV(a))XV(a)->t=y;
  R z;}
-Z re(){H("\n\nre "); I f,a,w; int res;
+Z re(){H("re "); I f,a,w; int res;
  H("reFa->");a=rf();
- H("re->");if(!mr()){H("r:%ld   reZa=>   ",a);R a;}
+ H("re->");if(!mr()){H("reZa=> ");R a;}
  if(*t==MN(0)){H("re->"); res=as(a); H("reZb=> "); R res;}
  if(y>1){H("re1->   ");prr(1);}
- H("f:%ld y:%ld\n",f,y);
+ H("f:%ld y:%ld ",f,y);
  if(f=!y){H("reFb->"); f=rf(); if(y!=1){H("re2->");prr(2,a);}}
  H("reE->");w=re();
  if(y){H("re3->");prr(3);}
- if(f){H("re->"); res=me(2,f,a,w); H("reZc=>"); R res;}
- else {H("re->"); res=me(1,a,w);   H("reZd=>"); R res;}
+ if(f){H("re->"); res=me(2,f,a,w); H("reZc=> "); R res;}
+ else {H("re->"); res=me(1,a,w);   H("reZd=> "); R res;}
 }
 Z in(s,b,r)I *b;{for(;r--;)if(b[r]==s)R 1;R 0;}
 Z lk(s,f)A f;{I i;if(!f)R 0;if(f->r>1)DO(f->r,if(f->d[i]==s)R ML(i))
@@ -133,7 +136,7 @@ Z str(t,r,b,n,p)I *t,*b,*p;{I f;if(f=t[-1]==')'&&t[-3]==';')--t;
  do if(QS(*--t)&&!in(*t,b,r)&&!in(*t,p,n)){if(n==999){H("strA->");prr(11);}p[n++]=*t;}while(f&&*--t==';');R n;}
 Z rz(b)I *b;{H("rz "); I i;A f;
  for(r=t=b;*r;++r)if(QS(*r))*r=(i=lk(*r,Qs?Qs:*X))?i:MV(vi(XS(*r),Cx));
- H("rz->");int res=re(); H("rz=>   ");R res;
+ H("rz->");int res=re(); H("rz=> ");R res;
 }
 extern V sv();
 f0(s){A a=(A)sv(Cx,si(s))->e;if(a)H("%s\n",a->p[a->n=1]);}
