@@ -86,50 +86,34 @@ H1(mth){H("mth ");
  else DO(an,k=at?mfmt(b,s,*p.f++):SH(*p.i++);h(d);d+=k)
  H("r:%ld mth=> ",(I)z);R(I)z;}
 
-paf(a,f)A a;{H("paf "); I t; CX cx; BRK H("f:%d q:%ld switch(M&(I)a):%ld a->t:%ld ",f,q,(M&(I)a),a->t);
- switch(M&(I)a){
-  case 4:if(U(a)>9)goto L;
-  case 2:
-  case 6:
-  CS(7,H(" %s",(f)?ppd(a):pp(a)))
-  CS(1,L:cx=XV(a)->cx;if(Cx==cx)pv(XV(a));else{if(cx!=Rx)pv(cx);H(".%s",XV(a)->s->n);})
-  CS(3,paf(XE(a)->f,f);H("... "))
-  CS(5,t=U(a);(a=(A)*X)&&t>-a->n&&t<a->r?paf(t<0?a->p[-t]:a->d[t],f):H(" &"))
-  case 0:
-   if(!a){H("paf=> ");R;}
-   t=a->t;
-   if(t>Et)
-    R H("%s",t>Xt?(u?XS(*a->d)->n:(C*)a->p[a->n+1]):"*derived fn*");
-   {I an=a->n,r=a->r,j=t==Et,n,k,d[9],*p;
-    C *s;
-    if(!an){H("paf=> ");R;}
-    if(!j){
-     if(t!=Ct)H("paf->"),a=(A)mth(a),H("paf->"),dc(a);
-     if(q){H("paf=> ");R 0;}
-     s=(C*)a->p,an=a->n,r=a->r;
-    }
-    else{
-     p=a->p;
-     if(r<2&&sym(a)){DO(an,H(" `%s",XS(*p++)->n)) H("paf=> ");R;}
-    }
-    if(r>1)for(mv(d,a->d,r),n=d[k=r-1];--k;)d[k]*=d[k+1];
-    else n=r?an:1;
-    H(" s:%s\n",s);
-    for(;;){
-     if(j)
-      DO(
-       n,H("< ");
-       ++u;
-       H("paf->");paf(*p++,f);
-       --u;
-       if(i<n-1||an>n)in())
-     else DO(n,BRK PC(*s++))
-     if(!(an-=n)){H("   paf=>   ");R;}
-     for(k=r;--k&&!(an%d[k]);)in();
-    }
-   }
- }
-}
+paf(a,f)A a; {
+  H("paf "); I t; CX cx; BRK H("f:%d q:%ld switch(M&(I)a):%ld a->t:%ld ",f,q,(M&(I)a),a->t);
+  switch(M&(I)a) {
+    case 4:if(U(a)>9)goto L;    case 2:    case 6:
+    CS(7,H(" %s",(f)?ppd(a):pp(a)))
+    CS(1,L:cx=XV(a)->cx;if(Cx==cx)pv(XV(a));else{if(cx!=Rx)pv(cx);H(".%s",XV(a)->s->n);})
+    CS(3,paf(XE(a)->f,f);H("... "))
+    CS(5,t=U(a);(a=(A)*X)&&t>-a->n&&t<a->r?paf(t<0?a->p[-t]:a->d[t],f):H(" &"))
+    case 0:
+      if(!a){H("paf=> ");R;} t=a->t;
+      if(t>Et)
+        R H("%s",t>Xt?(u?XS(*a->d)->n:(C*)a->p[a->n+1]):"*derived fn*"); {
+        I an=a->n,r=a->r,j=t==Et,n,k,d[9],*p; C *s;
+        if(!an){H("paf=> ");R;}
+        if(!j) {
+          if(t!=Ct)H("paf->"),a=(A)mth(a),H("paf->"),dc(a);
+          if(q){H("paf=> ");R 0;}
+          s=(C*)a->p,an=a->n,r=a->r; }
+        else{ p=a->p; if(r<2&&sym(a)){DO(an,H(" `%s",XS(*p++)->n)) H("paf=> ");R;} }
+        if(r>1)for(mv(d,a->d,r),n=d[k=r-1];--k;)d[k]*=d[k+1];
+        else n=r?an:1;
+        H(" s:%s\n",s);
+        for(;;) {
+          if(j)DO(n,H("< "); ++u; H("paf->");paf(*p++,f); --u; if(i<n-1||an>n)in())
+          else DO(n,BRK PC(*s++))
+          if(!(an-=n)){H("   paf=>   ");R;}
+          for(k=r;--k&&!(an%d[k]);)in(); } } } }
+
 H2(dth){A z;if(sym(w))F1 else F2{Z f[99],g[99],h[99];XW;I n=a->n,u,v,j=0,k=n!=1,*r;
  F x,*p=(F*)a->p;C *s;if(!wr)u=v=wr=1;else u=tr(wr-1,wd),v=wd[wr-1];Q(n!=v&&k,8)
  Q(n>99,12)DO(n,x=p[i];if(f[i]=x<0)x=-x;j+=g[i]=x;h[i]=.5+10*(x-g[i]);)
