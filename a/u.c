@@ -49,7 +49,7 @@ A SymbolTableHashChainLengths()
 V sv(c,s)CX c;S s;{C *t=index(s->n,'.'),b[99];
  if(t)*t=0,strcpy(b,s->n),*t='.',c=cxi(si(b)),s=si(t+1);R vi(s,c);}
 Z ispu(c){H("ispu ");int res=c==':'||c==';'||c=='('||c==')'||c=='{'||c=='}'||c=='['||c==']';H("ispu=> ");R res;}
-Z issp(c){H("issp ");int res=c==' '||c=='\n'||c=='\t'||c==12;H("issp=> ");R res;}
+Z issp(c){R c==' '||c=='\n'||c=='\t'||c==12;H("issp=> ");}
 isal(c){R c>='a'&&c<='z'||c>='A'&&c<='Z'||c=='_';}
 isdi(c){H("isdi ");int res=c>='0'&&c<='9';H("isdi=> ");R res;}
 Z isan(c){R isal(c)||isdi(c);}
@@ -58,9 +58,9 @@ Z std(s,d)C **s;F *d;{H("std ");
  j=strncmp(r,"Inf",3)||isal(r[3]);H("std->");if(j&&!isdi(r['.'==*r])){H("std=> ");R 0;}
  if(!j)*s=r+3,*d=Inf;else for(*d=strtod(r,s);**s=='0';++*s);if(i)*d=-*d;H("std=> ");R 1;}
 C *sy(s)C *s;{for(;isan(*++s););R s;}
-Z C *c0(s)C *s;{H("c0 ");for(;H("c0->"),issp(*s);++s);H("c0=> ");R s;}
+Z C *c0(s)C *s;{for(;issp(*s);++s);R s;}
 C *s1(s)C *s;{for(;isan(*++s)||*s=='l';);R s;}
-C *cl(s)C *s;{H("cl ");for(;H("cl->"),s=c0(s),*s=='\343';)for(;*++s&&*s!='\n';);H("cl=> ");R s;}
+C *cl(s)C *s;{H("cl ");for(;s=c0(s),*s=='\343';)for(;*++s&&*s!='\n';);H("cl=> ");R s;}
 C *bl(s)C *s;{for(;*s&&!issp(*s);++s);R s;}
 /*pt(u,t)I *u,*t;{I i;for(;u<t;)ispu(i=*u++)?H("%c",i):pa(i);H("^\n");}*/
 tc(t)I *t;{for(;t>tb;)if(!ispu(*--t))dc(*t);longjmp(J,-2);}
@@ -109,7 +109,13 @@ Z chk(){
   if(c=='{'||c=='(')++v; else if(c=='}'||c==')')--v;}  H("v:%ld s:%p s:%s ",v,s,s);
  int res=v<0?(v=0):v>0||s[-2]==':'; H("r:%d chk=> ",res);
  R res;}
-ff(a){H("ff->");if(Tf&&!qz(a))H("ff->"),paf(a,1),NL,tfl();H("ff=> ");}
+
+ff(a){H("ff ");
+ H("ff->");if(Tf&&!qz(a)){
+  H("ff->");paf(a,1);
+  NL;tfl();}
+ H("ff=> ");}
+
 Z bal(f){H("bal ");
  C c,b[999],*v=s;
  I i=0,j,k=0;
@@ -124,22 +130,27 @@ Z bal(f){H("bal ");
 C *nx(t)C *t;{R s=t,bal(1),s;}
 
 Z de(){H("de \n\nde->"); I a=exm(s,APL);
+ H("\na:%ld q:%ld J:%ld (q==-1&&J):%d\n",a,q,J,(1==-1&&J));
  if(q==-1&&J)u--,longjmp(J,-1);
- q=0; if(a)H("de->"),ff(a),H("de->"),dc(a);
+ q=0;
+ if(a) {
+  H("de->");ff(a);
+  H("de->");dc(a); }
  H("de->");tm(0);
  H("de=> ");}
 
 Z EoF;Z C sb[99999],*b=sb;sbi(){b=sb,*b=c=v=0;}
 C *sj(s,j)C *s;{R strncpy(sb,s,j),sb[j]=0,sb;}
+
 Z f1(f)FILE *f;{H("f1(u.c) ");
  I n=sb+sizeof(sb)-b;
  if(EoF=!fgets(b,n,f?f:stdin)){if(f)R 0;exit(1);}
  if(v&&!b[2]&&(*b=='\375'||*b=='$')){H("f1Za\n");R sbi(),0;} H("n:%ld strlen(b):%d b:%s",n,strlen(b),b);
  int res= n==strlen(b)+1?(H("buffer full\n"),sbi()):(s=b,H("f1->"),chk()?(b=s,1):0);
- H("r:%d f1=> ",res);R res;
-}
+ H("r:%d f1=> ",res);R res; }
+
 Z go(){H("go "); I r;
- for(;H("go->"),issp(*--s););
+ for(;issp(*--s););
  s[1]=0;
  H("go->");s=cl(b=sb);H("sb:%s s:%s ",sb,s);
  if(!*s){H("goZa\n");R 0;}
@@ -152,15 +163,19 @@ Z go(){H("go "); I r;
    if(!r)R q=0;}
   --u,longjmp(J,r?r:-3);}
  R H("go->"),de(),H("go=> "),0; }
-Z C *scp(s)C *s;{H("scp->");C *res=strcpy(mab(1+strlen(s)),s);H("scp=> ");R res;}
+
+Z C *scp(s)C *s;{H("scp scp->");C *res=strcpy(mab(1+strlen(s)),s);H("res:%s scp=> ",res);R res;}
+
 rf(s,f)C *s;{if(s)*++K=MV(s=scp(s)),*++K=-1;
  for(;;){if(!f1(f))if(EoF||go())break;if(s)--*K;}
  if(c||v)H("%s OPEN %c\n",b,c?c:'{'),c=v=0;if(s)K-=2,mf(s);}
+
 tf(){ H("tf ");H("tf->"); I r=f1(0);
  r?0:(H("tf->"),go());
  H("tf=>getm\n");
  if(!r)pr();
  R r;}
+
 ui(){CX c=Cx;if(*X){A f=(A)*X;Cx=(CX)f->p[f->n+2];}for(*++K=0,++u,pr();!tf(););R Cx=c,--u,--K,0;}
 
 Z C *es[]={"sotp","interrupt","wsfull","stack","value","valence","type","rand",
@@ -175,14 +190,17 @@ Z tok(){H("tok ");
  CX c=Cx;
  I *j=J,*k=K,z;
  if(setjmp(J=b))z=0;
- else {H("tok->");int bb=bal(0);H("tok->");z=ra(bb);}
+ else {H("tok->");int res=bal(0);H("tok->");z=ra(res);}
  H("t:%p *t:%ld b:%s z:%ld tok=> ",t,*t,b,z);
  R K=k,Cx=c,J=j,z;}
+
 ez(a){H("ez ");
  jmp_buf b;I *j=J,*k=K,*x=X,*y=Y,i;CX c=Cx;
  if(i=setjmp(J=b)){Cx=c;
  for(J=j,K=k,X=x;Y<y;)dc(*Y++);R q?0:i!=-3?i:0;}
- R H("ez->"),a=ev(a),J=j,H("ez=> "),a;}
+ H("ez->"),a=ev(a);
+ H("ez=> ");R J=j,a; }
+
 exm(a,m)C *a;{ H("exm *a:%s m:%ld s:%s ",a,m,s); I e,z;
  H("exm->");s=cl(a);
  if(*s=='$')R H("exm->"),sys(s+1),H("exm=> "),nl;
@@ -193,9 +211,8 @@ exm(a,m)C *a;{ H("exm *a:%s m:%ld s:%s ",a,m,s); I e,z;
  H("exm->");*++K=MS(a=scp(a)),H("exm->"),z=ez(e),H("exm->"),mf(a),K--,H("exm->"),ef(e);
  if(!z){if(!q)q=9;H("exm=> ");R 0;}
  if(QE(e)&&XE(e)->f==MN(0))R H("exm->"),dc(z),H("exm=> \n\n"),nl;
- else R H("r:%ld exm=> \n\n",z),z;
+ else R H("z:%ld exm=> ",z),z; }
 
-}
 extern I Gf,Sf;pev(a){I g=G;A z;G=Gf,a=ez(a),G=g;if(!a&&!q)longjmp(J,-3);
  z=gv(Et,2);*z->p=(I)gi(q);z->p[1]=q?gsv(0,q<0?qs:es[q]):a;R q=0,(I)z;}
 pexm(a,m){I g=G;A z;R G=Gf,a=exm(a,m),G=g,a?(z=gs(Et),*z->p=a):(z=gi(q),q=0),(I)z;}

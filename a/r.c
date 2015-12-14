@@ -39,10 +39,8 @@ V vi(s,cx)S s;CX cx;{HT ht=cx->ht;V v,vh;V *bp=(V *)HTHASH(ht,s);
 CX cx(s)C *s;{R *s!='.'?cxi(si(s)):Rx;}
 
 gz(){R nl;}
-qz(a)A a;{
- int res=QA(a)&&a->t==Et&&!a->n;
- H("qz   a->t:%ld   Et:%ld   a->n:%ld   qz-res:%d   qz=> ",a->t,Et,a->n,res);
- R res; }
+qz(a)A a;{H("qz "); int res=QA(a)&&a->t==Et&&!a->n; H("qz=> "); R res; }
+
 #define ELSE MN(1)
 ty(a){ H("ty ");I t;
  if(!QL(a)) {

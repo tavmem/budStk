@@ -14,10 +14,12 @@ dec(a)A a;{H("dec->");
   if(a->t==Xt)DO(a->r,dc(a->d[i]))
   else ef(*a->p),mf(a->p[a->n+1]);
  mf(a);}
+
 ef(a)I a;{H("ef "); E e;I n;
  if(!QE(a)){H("ef->");int res=dc(a);H("ef=> ");R res;}
  e=XE(a);
  DO(e->n,ef(e->a[i]))H("ef->"),ef(e->f),H("ef->"),mf(e);}
+
 I *tm(n){H("tm "); Z I *ta=0; if(ta){H("tm->");mf(ta);}
  if(n){H("tm->");ta=ma(n);} else ta=0; H("tm=> ");R ta;}
 mv(d,s,n)I *d,*s;{DO(n,*d++=*s++)}
@@ -44,7 +46,7 @@ A gi(i)I i;GA(It,0,1,*z->p=i)A gs(t)GA(t,0,1,1) A gf(f)F f;GA(Ft,0,1,*(F*)z->p=f
 
 #define EV(z) {H("EV ");I t;switch(M&z){CS(0,ic(z))CS(3,H("EV->");z=ee(XE(z)))\
  CS(1,ic(z=gt(XV(z))))CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}H("EV=> ");}
-I ev(z){H("ev ");if(q)err(q,QE(z)?XE(z)->f:z);H("ev->");EV(z) H("ev=> ");R z;}
+I ev(z){H("ev ");if(q)err(q,QE(z)?XE(z)->f:z);H("ev->");EV(z) H("z:%d ev=> ",z);R z;}
 extern PX(),(*PN[])(),(*P1[])(),(*P2[])();
 I ee(e)E e;{H("ee ");I z,i,n,f=e->f;if(QN(f))R(*PN[U(f)])(e);
  for(i=n=e->n;i;*--Y=z){z=e->a[--i];H("ee->");EV(z)}H("ee->");EV(f)

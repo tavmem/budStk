@@ -28,8 +28,12 @@ Z C *p0[]={"^","\251","+","\253","\323","\304","-","\337","|","<",
              "\356","\342","\335","\333","%","\326",0};
 extern C *xs[],*xd[],*index(),*nx(),*cl();
 lu(s,t)C *s,*t[];{I i=0;for(;t[i];)if(!strcmp(s,t[i++]))R i;R 0;}
+
 Z C*pp(a){R QS(a)?XS(a)->n:(QN(a)?(APL?n0:ns):QP(a)?(APL?p0:ps):xs)[U(a)];}
-Z C*ppd(a){R QS(a)?XS(a)->n:(QN(a)?(APL?n0:ns):QP(a)?(APL?p0:ps):xd)[U(a)];}
+
+Z C*ppd(a){H("ppd (I)a:%ld\n",(I)a);
+  R QS(a)?XS(a)->n:(QN(a)?(APL?n0:ns):QP(a)?(APL?p0:ps):xd)[U(a)];}
+
 pi(s)C *s;{I i;if(i=lu(s,APL?n0:ns))R MN(i-1);if(i=lu(s,APL?p0:ps))R MP(i-1);
  if(*s=='_')if(i=lu(s,xs))R MX(i-1);R 0;}
 Z C*fn(s,n)C *s;{for(;--n;)s=1+nx(s);R s;}
@@ -87,7 +91,8 @@ H1(mth){H("mth ");
  H("r:%ld mth=> ",(I)z);R(I)z;}
 
 paf(a,f)A a; {
-  H("paf "); I t; CX cx; BRK H("f:%d q:%ld switch(M&(I)a):%ld a->t:%ld ",f,q,(M&(I)a),a->t);
+  H("paf (I)a:%ld f:%d q:%ld switch(M&(I)a):%ld\n",(I)a,f,q,(M&(I)a));
+  I t; CX cx; BRK
   switch(M&(I)a) {
     case 4:if(U(a)>9)goto L;    case 2:    case 6:
     CS(7,H(" %s",(f)?ppd(a):pp(a)))
@@ -112,7 +117,7 @@ paf(a,f)A a; {
           if(j)DO(n,H("< "); ++u; H("paf->");paf(*p++,f); --u; if(i<n-1||an>n)in())
           else DO(n,BRK PC(*s++))
           if(!(an-=n)){H("   paf=>   ");R;}
-          for(k=r;--k&&!(an%d[k]);)in(); } } } }
+          for(k=r;--k&&!(an%d[k]);)in(); } } } H("\npaf=> "); }
 
 H2(dth){A z;if(sym(w))F1 else F2{Z f[99],g[99],h[99];XW;I n=a->n,u,v,j=0,k=n!=1,*r;
  F x,*p=(F*)a->p;C *s;if(!wr)u=v=wr=1;else u=tr(wr-1,wd),v=wd[wr-1];Q(n!=v&&k,8)
