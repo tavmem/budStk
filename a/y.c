@@ -105,7 +105,7 @@ sys(s)C *s;{H("sys ");
   CS(5,--K;sik();NL;++K)CS(6,wa(!*s?-1:*s=='-'?-2:atoi(s)))
   CS(7,if(*s)Cx=cx(s);else H("%s\n",Cx==Rx?".":Cx->s->n))
   CS(8,srandom(atoi(s)))CS(10,PERR(s,chdir(*s?s:getenv("HOME")));setPWD();)
-  CS(12,if(*s)R APL=s[1]=='p';H(APL?"apl\n":"ascii\n");)
+  CS(12,if(*s)R APL=s[1]=='p';H(APL?"\napl\n":"\nascii\n");)
   CS(14,for(;*s;*w=d,w=bl(s=cl(w)),d=*w,*w=0)expunge(sv(Cx,si(s))))
   CS(15,if(!*s||!isdi(*s)||s[1]&&!isdi(s[1]))R H("%c%c\n",Fs[3],Fs[4]);Fs[3]=s[1]?*s++:'0';Fs[4]=*s)
   CF(17,sq)CS(18,H("%p\n",(a=versGet())->p);dc(a))CS(19,loadafile(s,1))

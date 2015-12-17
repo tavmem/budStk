@@ -38,7 +38,9 @@ Z F f;Z C c=' ';C *zer(t,d,n){R trp(t,d,t==Ct?&c:t==Et?(C*)&nl:(C*)&f,n);}
 zr(a)A a;{zer(a->t,a->p,a->n);R(I)a;}
 I tr(r,d)I r,*d;{I n,*t;if(!r)R 1;for(t=d+r,n= *d;++d<t;n*= *d);R n;}
 tr1(r,d)I r,*d;{F s=1;I t;if(r<0)DO(-r,s*=*d)else DO(r,if(s*=t=*d++,t<0)R -1)R s>0x7FFFFFFF?-1:(I)s;}
-#define GA(_t,_r,_n,x) {I _f=_t==Ct;H("GA->");A z=(A)mab(_f+AH+Tt(_t,_n));z->c=1,z->t=_t,z->r=_r,z->n=_n;x;if(_f)((C*)z->p)[_n]=0;H("GA=> ");R z;}
+#define GA(_t,_r,_n,x) {H("GA ");\
+ I _f=_t==Ct;H("GA->");A z=(A)mab(_f+AH+Tt(_t,_n));z->c=1,z->t=_t,z->r=_r,z->n=_n;x;if(_f)((C*)z->p)[_n]=0;\
+ H("GA=> ");R z;}
 A gm(t,m,n)GA(t,2,m*n,*z->d=m;z->d[1]=n)        A gv(t,n)GA(t,1,n,*z->d=n)
 A gd(t,a)A a;GA(t,a->r,a->n,mv(z->d,a->d,a->r)) A ga(t,r,n,d)GA(t,r,n,mv(z->d,d,r))
 A gc(t,r,n,d,p)GA(t,r,n,mv(z->d,d,r);tmv(t,z->p,p,n))
@@ -46,14 +48,22 @@ A gi(i)I i;GA(It,0,1,*z->p=i)A gs(t)GA(t,0,1,1) A gf(f)F f;GA(Ft,0,1,*(F*)z->p=f
 
 #define EV(z) {H("EV ");I t;switch(M&z){CS(0,ic(z))CS(3,H("EV->");z=ee(XE(z)))\
  CS(1,ic(z=gt(XV(z))))CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}H("EV=> ");}
-I ev(z){H("ev ");if(q)err(q,QE(z)?XE(z)->f:z);H("ev->");EV(z) H("z:%d ev=> ",z);R z;}
+
+I ev(z){H("ev ");
+  if(q)err(q,QE(z)?XE(z)->f:z);
+  H("ev->");EV(z) 
+  H("z:%d ev=> ",z);R z;}
+
 extern PX(),(*PN[])(),(*P1[])(),(*P2[])();
-I ee(e)E e;{H("ee ");I z,i,n,f=e->f;if(QN(f))R(*PN[U(f)])(e);
+
+I ee(e)E e;{H("ee ");I z,i,n,f=e->f;
+ if(QN(f)){H("ee=> ");R(*PN[U(f)])(e);}
  for(i=n=e->n;i;*--Y=z){z=e->a[--i];H("ee->");EV(z)}H("ee->");EV(f)
  if(QA(f)){++n;*--Y=f;if(((A)f)->t>Xt+1)z=(I)ga(Xt,n,0L,Y),Y+=n,z;z=af(n);H("ee=> ");R z;}
  else{i=U(f);
   EQ(0,QX(f)?(i?PX(i,n):xin(*Y,n-1,0)):n==2?(*P2[i])(*Y,Y[1],i):(*P1[i])(*Y,i))}
  DO(n,H("ee->");dc(*Y++))H("ee=> ");R z;}
+
 I fa(f,a,w){I z,i,n=w?2:1;if(w)*--Y=w;*--Y=a;if(QA(f))ic(*--Y=f),z=af(++n);
  else{i=U(f);EQ(0,QX(f)?PX(i,n):n==2?(*P2[i])(*Y,Y[1],i):(*P1[i])(*Y,i))}
  DO(n,dc(*Y++))R z;}

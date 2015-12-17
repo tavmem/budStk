@@ -13,7 +13,7 @@ C *mab(m)unsigned m;{H("mab ");
   for(n=i;n<30;)if(p=MM[++n]){
   for(MM[n]=(I*)*p,p[-1]=i;i<n;)r=p+MZ[--n],MM[r[-1]=n]=r,*r=0;H("mab=> ");R(C*)p;}
   if(mc()>=i)continue;} while(mmr(m,i));}
-I *ma(m){H("ma ma=>"); R(I*)mab(m<<2);}
+I *ma(m){H("ma ma->"); I *res=mab(m<<2); H("ma=> "); R res;}
 mf(p)I *p;{H("mf p:%p *p:%ld ",p,*p); I i=p[-1];
  H("i:%ld ",i);if(i<32)H("(I)MM[i]:%ld",(I)MM[i]);H("\n");
  *p=(I)MM[i]; MM[i]=p;
