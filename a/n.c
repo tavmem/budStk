@@ -46,7 +46,8 @@ Z mx(o,f,g){A z;I d[3];*d=MN(o),d[1]=f,d[2]=g;R(I)ga(Xt,g?3:2,0L,d);}
 N(rk){R mx(8,ev(*e->a),ev(e->a[1]));}
 N(ea){A a=(A)ev(*e->a);if(QF(a))R mx(9,a,0L);
  R a->n==1&&a->t==Et&&QF(*a->p)&&QS(*a->p)?(dc(a),ic(*a->p)):(I)a;}
-extern xis();I(*PN[])()={xis,xpr,xif,xwh,xdo,xca,xti,xli,rk,ea};
+extern xis();
+I(*PN[])()={xis,xpr,xif,xwh,xdo,xca,xti,xli,rk,ea};
 #define XI 10000
 C *xs[XI]={"[]"},*xd[XI]={"??"};I xn[XI];
 Z I(*xf[XI])(),xt[XI],xp[XI],xi=0,y[8];

@@ -5,7 +5,13 @@ I nl,sq=2,q,(*g)(),*Y,*X,*XY,*K=MY;
 extern HT hti();
 ki(){H("ki ");A a; X=Y=XY=(K=MY)+2000,*X=*K=0,*++K=0,Cx=Rx=&rx,
  rx.s=(S)si(""),rx.n=0,rx.ht=hti(HTSIZE),H("ki->");a=gv(Et,0),a->c=0,nl=(I)a,H("ki->");te();H("ki=> ");}
-ic(a)A a;{R!QA(a)?(I)a:a->c?(++a->c,(I)a):im(a);}
+
+ic(a)A a;{H("ic ");
+ //R!QA(a)?(I)a:a->c?(++a->c,(I)a):im(a);
+ if(!QA(a)){H("ic=> ");R(I)a;}
+ else{ if(a->c){++a->c; H("ic=> ");R(I)a;}
+       else{H("ic=> ");R im(a);} } }
+
 dc(a)A a;{H("dc ");if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):H("dc->"),dm(a);H("dc=> ");}
 dec(a)A a;{H("dec->");
  if(a->t<Et){int res=mf(a);H("dec=> ");R res;}
@@ -46,8 +52,13 @@ A gd(t,a)A a;GA(t,a->r,a->n,mv(z->d,a->d,a->r)) A ga(t,r,n,d)GA(t,r,n,mv(z->d,d,
 A gc(t,r,n,d,p)GA(t,r,n,mv(z->d,d,r);tmv(t,z->p,p,n))
 A gi(i)I i;GA(It,0,1,*z->p=i)A gs(t)GA(t,0,1,1) A gf(f)F f;GA(Ft,0,1,*(F*)z->p=f)
 
-#define EV(z) {H("EV ");I t;switch(M&z){CS(0,ic(z))CS(3,H("EV->");z=ee(XE(z)))\
- CS(1,ic(z=gt(XV(z))))CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}H("EV=> ");}
+#define EV(z) {H("EV ");I t; H("switch:%ld ",M&z);\
+ switch(M&z){\
+  CS(0,H("EV->");ic(z))\
+  CS(3,H("EV->");z=ee(XE(z)))\
+  CS(1,ic(z=gt(XV(z))))\
+  CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}\
+ H("EV=> ");}
 
 I ev(z){H("ev ");
   if(q)err(q,QE(z)?XE(z)->f:z);
@@ -56,8 +67,10 @@ I ev(z){H("ev ");
 
 extern PX(),(*PN[])(),(*P1[])(),(*P2[])();
 
-I ee(e)E e;{H("ee ");I z,i,n,f=e->f;
- if(QN(f)){H("ee=> ");R(*PN[U(f)])(e);}
+I ee(e)E e;{H("ee "); int res;
+ I z,i,n,f=e->f;
+ if(QN(f)){ H("U(f):%ld ",U(f)); H("ee->");res=(*PN[U(f)])(e); H("ee=> ");R res; }
+ H(" eeA ");
  for(i=n=e->n;i;*--Y=z){z=e->a[--i];H("ee->");EV(z)}H("ee->");EV(f)
  if(QA(f)){++n;*--Y=f;if(((A)f)->t>Xt+1)z=(I)ga(Xt,n,0L,Y),Y+=n,z;z=af(n);H("ee=> ");R z;}
  else{i=U(f);
@@ -98,7 +111,8 @@ Z gap(a,w)A a,w;{I v=a->r==w->r,n=v?*w->d:1;A z=v?gv(It,n):gs(It);
 Z gia(i,r)A i;{R!r&&i&&i->t<Et?enc(i):(I)i;}
 Z e0(e,a)E e;{I *r=e->a+e->n-1;A z=gd(It,a);I t=*r;
  DO(z->n,z->p[i]=i)R *r=(I)z,a=ez(ME(e)),dc(z),*r=t,a;}
-Z upd(x,d,i,p,r)A p;{I b[2],f=QV(x),a,*z,g=i==MP(22);V v=f?XV(x):(V)(X+U(x));
+
+Z upd(x,d,i,p,r)A p;{H("upd ");I b[2],f=QV(x),a,*z,g=i==MP(22);V v=f?XV(x):(V)(X+U(x));
   extern I Sf;
   if(f){if(p||i)gt(v);}else Q((p||i)&&!v->a,4)z=p?(I*)pka(p,v):(I*)v;
   if(QE(i))Q(!(i=*Y=e0(XE(i),*z)),9)
@@ -112,7 +126,18 @@ Z upd(x,d,i,p,r)A p;{I b[2],f=QV(x),a,*z,g=i==MP(22);V v=f?XV(x):(V)(X+U(x));
     if(Sf&&v->rff)v->z=2,dc(af4(v->rff,v->rfc,d,i,p,v));
     val(v);}
   if(v->o)xup(v,d,i,p,r);R 1;}
-set(x,a){I r;R *--Y=a,*--Y=0,*--Y=0;r=upd(x,a,0,0,0),dc(Y[2]),Y+=3,r;}
+
+set(x,a){H("set ");I r;
+ R *--Y=a,*--Y=0,*--Y=0,r=upd(x,a,0,0,0),dc(Y[2]),Y+=3,r;
+ /*
+ *--Y=a,*--Y=0,*--Y=0;
+ H("set->");r=upd(x,a,0,0,0);
+ H("set->");dc((A)Y[2]);
+ Y+=3;
+ H("set=> ");R r;
+ */
+}
+
 aset(v,d,i,p){I r;Y-=3,*Y=i?ic(i):0,r=upd(MV(v),Y[2]=d,i,p,0);dc(Y[2]),dc(*Y),Y+=3;R xrr(),r;}
 Z lst(n,p,w)I *p;A w;{Q(w->r>1,7)Q(w->r&&w->n!=n,8)
  DO(n,if(!set(p[i],pck(i*w->r,w)))R 0)DO(n,if(QV(p[i]))XV(p[i])->z=1)R 1;}
@@ -132,6 +157,11 @@ Z mr0(e)E e;{I y,f=e->f,n,r=0;A a;if(f!=MP(36)&&f!=MP(74)){n=e->n-1;
  if(f==MP(74)){S s=ss(e->a[n=e->n-1]),c=n?ss(*e->a):0;Q(!s||n&&!c,9)
   y=MV(sv(n?cxi(c):Cx,s));} R upd(y,Y[2],*Y,Y[1],r);}
 Z mrg(e){R *--Y=0,*--Y=0,e=mr0(e),dc(*Y++),dc(*Y++),e;}
-xis(e)E e;{I n=e->n-1,a=*e->a,w=e->a[n];EV(w)if(!n)_longjmp(J,w);
- for(*--Y=w;!(!QE(a)?set(a,ic(w)):(e=XE(a),e->f==MN(7))?lst(e->n,e->a,w)
-  :peak(e->f)?pea(e,w):mrg(e));)err(q,MN(0));R *Y++;}
+
+xis(e)E e;{H("xis "); int tmp;
+ I n=e->n-1,a=*e->a,w=e->a[n];
+ H("xis->");EV(w)
+ if(!n)_longjmp(J,w);
+ for(*--Y=w;!(!QE(a)?(H("xis->"),tmp=ic(w),H("xis->"),set(a,tmp)):(e=XE(a),e->f==MN(7))?
+  lst(e->n,e->a,w):peak(e->f)?pea(e,w):mrg(e));)err(q,MN(0));
+ H("xis=> ");R *Y++;}
