@@ -14,11 +14,13 @@ C *mab(m)unsigned m;{H("mab ");
   for(MM[n]=(I*)*p,p[-1]=i;i<n;)r=p+MZ[--n],MM[r[-1]=n]=r,*r=0;H("mab=> ");R(C*)p;}
   if(mc()>=i)continue;} while(mmr(m,i));}
 I *ma(m){H("ma ma->"); I *res=mab(m<<2); H("ma=> "); R res;}
+
 mf(p)I *p;{H("mf p:%p *p:%ld ",p,*p); I i=p[-1];
  H("i:%ld ",i);if(i<32)H("(I)MM[i]:%ld",(I)MM[i]);H("\n");
  *p=(I)MM[i]; MM[i]=p;
  H(" MM: ");DO(31,if(MM[i])H("%p ",MM[i]);else H("_ ");) H("\n");
  H("*MM: ");DO(31,if(MM[i])H("%ld ",*MM[i]);else H("_ ");) H("mf=>\n");}
+
 mb(p,n)I *p;{H("mb p:%p n:%d\n",p,n); I i=31,j;
  for(n-=2,++p;i--;)if(j=MZ[i],j<=n)n-=j,*p=i,H("mb->"),mf(p+1),p+=j;H("mb=> ");}
 mc(){R 0;}

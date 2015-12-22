@@ -220,7 +220,7 @@ exm(a,m)C *a;{ H("exm ");
  Q(!e,15)
  H("exm->");*++K=MS(a=scp(a)),H("expstr:%s\nexm->",a),z=ez(e),H("exm->"),mf(a),K--,H("exm->"),ef(e);
  if(!z){if(!q)q=9;H("exm=> ");R 0;}
- if(QE(e)&&XE(e)->f==MN(0))R H("exm->"),dc(z),H("exm=> \n\n"),nl;
+ if(QE(e)&&XE(e)->f==MN(0))R H("exm->"),dc(z),H("exm=> "),nl;
  else R H("z:%ld exm=> ",z),z; }
 
 extern I Gf,Sf;pev(a){I g=G;A z;G=Gf,a=ez(a),G=g;if(!a&&!q)longjmp(J,-3);

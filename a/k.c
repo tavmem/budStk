@@ -12,8 +12,17 @@ ic(a)A a;{H("ic ");
  else{ if(a->c){++a->c; H("ic=> ");R(I)a;}
        else{H("ic=> ");R im(a);} } }
 
-dc(a)A a;{H("dc ");if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):H("dc->"),dm(a);H("dc=> ");}
-dec(a)A a;{H("dec->");
+dc(a)A a; {H("dc ");
+ //if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):H("dc->"),dm(a);    /*something wrong, calls dm*/
+ H("\n\nTa:if(QA(a)&&a):%d (I)(a)&M:%ld QA(a):%d (I)a:%ld)\n",
+    QA(a)&&a,(I)(a)&M,QA(a),(I)a);
+ if(QA(a)&&a){
+  H("Tb:if(a->c):%ld ",a->c);
+  if(a->c){H("--a->c||dec(a) ");--a->c||(H("dec->"),dec(a));}
+  else{ H("dc->");dm(a); } H("\n"); }
+ H("dc=> ");}
+
+dec(a)A a;{H("dec ");
  if(a->t<Et){int res=mf(a);H("dec=> ");R res;}
  if(a->t==Et)DO(a->n,dc(a->p[i]))
  else
@@ -24,7 +33,9 @@ dec(a)A a;{H("dec->");
 ef(a)I a;{H("ef "); E e;I n;
  if(!QE(a)){H("ef->");int res=dc(a);H("ef=> ");R res;}
  e=XE(a);
- DO(e->n,ef(e->a[i]))H("ef->"),ef(e->f),H("ef->"),mf(e);}
+ DO(e->n,H("ef->");ef(e->a[i]))
+ H("ef->"),ef(e->f),H("ef->"),mf(e);
+ H("ef=> ");}
 
 I *tm(n){H("tm "); Z I *ta=0; if(ta){H("tm->");mf(ta);}
  if(n){H("tm->");ta=ma(n);} else ta=0; H("tm=> ");R ta;}
@@ -119,24 +130,24 @@ Z upd(x,d,i,p,r)A p;{H("upd ");I b[2],f=QV(x),a,*z,g=i==MP(22);V v=f?XV(x):(V)(X
   if(f){Q(g&&0==((A)(*z))->r,7);i=*Y=g?gap((A)*z,(A)d):gia((A)i,r);
    Y[2]=d=prcb(v,d,i,p);if(!d)R 0;Y[2]=d=pcb(v,d,i,p);if(!d)R 0;
    Q(!p&&!i&&v->o&&!vfy(v,d),17)}
-  if(!z)R 0;a=!i?(dc(*z),*z=ic(d)):in(z,g?0:i,d,r);if(!a||!f)R a;
+  if(!z)R 0;
+  a=!i?(H("upd->"),dc(*z),H("upd->"),*z=ic(d)):in(z,g?0:i,d,r);
+  if(!a||!f)R a;
   i=*Y;d=Y[2];
   if(v->z!=2) {inv(v,r||g?0:i);
     if(Sf&&v->f)v->z=2,dc(af4(v->f,v->c,d,i,p,v));
     if(Sf&&v->rff)v->z=2,dc(af4(v->rff,v->rfc,d,i,p,v));
     val(v);}
-  if(v->o)xup(v,d,i,p,r);R 1;}
+  if(v->o)xup(v,d,i,p,r);
+  H("upd=> ");R 1;}
 
 set(x,a){H("set ");I r;
- R *--Y=a,*--Y=0,*--Y=0,r=upd(x,a,0,0,0),dc(Y[2]),Y+=3,r;
- /*
+ //R *--Y=a,*--Y=0,*--Y=0,r=upd(x,a,0,0,0),dc(Y[2]),Y+=3,r;
  *--Y=a,*--Y=0,*--Y=0;
  H("set->");r=upd(x,a,0,0,0);
  H("set->");dc((A)Y[2]);
  Y+=3;
- H("set=> ");R r;
- */
-}
+ H("set=> ");R r; }
 
 aset(v,d,i,p){I r;Y-=3,*Y=i?ic(i):0,r=upd(MV(v),Y[2]=d,i,p,0);dc(Y[2]),dc(*Y),Y+=3;R xrr(),r;}
 Z lst(n,p,w)I *p;A w;{Q(w->r>1,7)Q(w->r&&w->n!=n,8)
