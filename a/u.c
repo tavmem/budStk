@@ -101,12 +101,12 @@ Z rw(){H("rw ");
  if(*++s=='='||*s=='L')++s;
  H("rw->");int res=rs(v,1);H("rw=> ");R res;}
 
-Z ra(k){H("ra "); H("tb:");DO(5,H(" %d",tb[i]);)H("... ");
+Z ra(k){H("ra "); H("tb:");DO(10,H(" %u",tb[i]);)H("... ");
  r=s;t=tb;
  if(k)*t++='{';
  for(;*s;++t,H("ra->"),s=cl(s)){H("ra->");*t=rw();}
  if(k)*t++='}';
- *t=0;  H("tb:");DO(5,H(" %d",tb[i]);)H("... ");
+ *t=0;  H("tb:");DO(10,H(" %u",tb[i]);)H("... ");
  H("ra->");int res=rd(tb);H("ra=> ");R res;}
 Z u,c,v;
 tfl(){/*ioctl?*/fflush(stdout);}
@@ -139,7 +139,7 @@ Z bal(f){H("bal ");
 C *nx(t)C *t;{R s=t,bal(1),s;}
 
 Z de(){H("de de->"); I a=exm(s,APL);
- H("\na:%ld q:%ld J:%ld (q==-1&&J):%d\n",a,q,J,(1==-1&&J));
+ H("\na:%lu q:%lu J:%lu (q==-1&&J):%u\n",a,q,J,(1==-1&&J));
  if(q==-1&&J)u--,longjmp(J,-1);
  q=0;
  if(a) {
@@ -200,7 +200,7 @@ Z tok(){H("tok ");
  I *j=J,*k=K,z;
  if(setjmp(J=b))z=0;
  else {H("tok->");int res=bal(0);H("tok->");z=ra(res);}
- H("t:%p *t:%ld b:%s z:%ld tok=>\n",t,*t,b,z);
+ H("t:%lu *t:%lu b:%s z:%lu tok=>\n",t,*t,b,z);
  R K=k,Cx=c,J=j,z;}
 
 ez(a){H("ez ");
@@ -221,7 +221,7 @@ exm(a,m)C *a;{ H("exm ");
  H("exm->");*++K=MS(a=scp(a)),H("expstr:%s\nexm->",a),z=ez(e),H("exm->"),mf(a),K--,H("exm->"),ef(e);
  if(!z){if(!q)q=9;H("exm=> ");R 0;}
  if(QE(e)&&XE(e)->f==MN(0))R H("exm->"),dc(z),H("exm=> "),nl;
- else R H("z:%ld exm=> ",z),z; }
+ else R H("z:%lu exm=> ",z),z; }
 
 extern I Gf,Sf;pev(a){I g=G;A z;G=Gf,a=ez(a),G=g;if(!a&&!q)longjmp(J,-3);
  z=gv(Et,2);*z->p=(I)gi(q);z->p[1]=q?gsv(0,q<0?qs:es[q]):a;R q=0,(I)z;}

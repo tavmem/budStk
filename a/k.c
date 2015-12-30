@@ -14,8 +14,7 @@ ic(a)A a;{H("ic ");
 
 dc(a)A a; {H("dc ");
  //if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):H("dc->"),dm(a);    /*something wrong, calls dm*/
- H("\n\nTa:if(QA(a)&&a):%d (I)(a)&M:%ld QA(a):%d (I)a:%ld)\n",
-    QA(a)&&a,(I)(a)&M,QA(a),(I)a);
+ H("\n\nTa:if(QA(a)&&a):%u (I)(a)&M:%lu QA(a):%d (I)a:%lu)\n",QA(a)&&a,(I)(a)&M,QA(a),(I)a);
  if(QA(a)&&a){
   H("Tb:if(a->c):%ld ",a->c);
   if(a->c){H("--a->c||dec(a) ");--a->c||(H("dec->"),dec(a));}
@@ -63,7 +62,7 @@ A gd(t,a)A a;GA(t,a->r,a->n,mv(z->d,a->d,a->r)) A ga(t,r,n,d)GA(t,r,n,mv(z->d,d,
 A gc(t,r,n,d,p)GA(t,r,n,mv(z->d,d,r);tmv(t,z->p,p,n))
 A gi(i)I i;GA(It,0,1,*z->p=i)A gs(t)GA(t,0,1,1) A gf(f)F f;GA(Ft,0,1,*(F*)z->p=f)
 
-#define EV(z) {H("EV ");I t; H("switch:%ld ",M&z);\
+#define EV(z) {H("EV ");I t; H("switch:%ld ",(I)M&z);\
  switch(M&z){\
   CS(0,H("EV->");ic(z))\
   CS(3,H("EV->");z=ee(XE(z)))\

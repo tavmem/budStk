@@ -66,7 +66,7 @@ Z me(n,f,a,b,c){H("me ");
 Z mr(){H("mr "); int r= *t&&*t!=';'&&*t!=')'&&*t!=']'&&*t!='}'&&*t!=ELSE; H("mr=> ");R r;}
 Z rt(g){H("rt ");I f,a,b,c=0;
  H("rt->");if(!mr()){H("rtB->");prr(4);}
- f= *t++; H("switch(f:%ld) ",f);
+ f= *t++; H("switch(f:%lu) ",f);
  switch(f){
   case MN(5):
   case MN(3):
@@ -84,7 +84,7 @@ Z rt(g){H("rt ");I f,a,b,c=0;
   CS('[',H("rtE->");prr(6))
   CS('(',--t;a=rl(MN(7)))
   CS('{',--t;a=rl(MN(1)))
-  default:H("y:%ld ",y); H("rt->");y=ty(a=f); H("y:%ld ",y);}
+  default:H("default y:%ld ",y); H("rt->");y=ty(a=f); H("y:%ld ",y);}
  if(!y)for(;*t==';';)a=rl(a);
  H("rt=> "); R a;}
 #define RLBLEN 999

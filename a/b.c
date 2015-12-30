@@ -16,10 +16,10 @@ C *mab(m)unsigned m;{H("mab ");
 I *ma(m){H("ma ma->"); I *res=mab(m<<2); H("ma=> "); R res;}
 
 mf(p)I *p;{H("mf p:%p *p:%ld ",p,*p); I i=p[-1];
- H("i:%ld ",i);if(i<32)H("(I)MM[i]:%ld",(I)MM[i]);H("\n");
+ H("i:%ld ",i);if(i<32)H("(I)MM[i]:%p",(I)MM[i]);H("\n");
  *p=(I)MM[i]; MM[i]=p;
  H(" MM: ");DO(31,if(MM[i])H("%p ",MM[i]);else H("_ ");) H("\n");
- H("*MM: ");DO(31,if(MM[i])H("%ld ",*MM[i]);else H("_ ");) H("mf=>\n");}
+ H("*MM: ");DO(31,if(MM[i])H("%lu ",*MM[i]);else H("_ ");) H("mf=>\n");}
 
 mb(p,n)I *p;{H("mb p:%p n:%d\n",p,n); I i=31,j;
  for(n-=2,++p;i--;)if(j=MZ[i],j<=n)n-=j,*p=i,H("mb->"),mf(p+1),p+=j;H("mb=> ");}
