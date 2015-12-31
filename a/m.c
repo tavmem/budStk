@@ -32,8 +32,8 @@ map(f,i){I p=(I)mmap(0,lseek(f,0,2),PROT_READ|(i?PROT_WRITE:0),i&2?MAP_PRIVATE:M
 syst(s)C*s;{I r;qw=0,r=system(s),qw=1,r;if(r==-1)H("%ld\n",r);R r;}
 Z struct stat b;gwd(s)C *s;{Z C r[99];Z dev_t d;Z ino_t i;stat(".",&b);
  if(d!=b.st_dev||i!=b.st_ino)d=b.st_dev,i=b.st_ino,qw=0,getcwd(r,99),qw=1;strcpy(s,r);}
-sgi(){H("sgi   ");coreLimSet(0);/*signal(SIGCHLD,sigc);*/signal(SIGPIPE,SIG_IGN);
- signal(SIGINT,sigi);signal(SIGSEGV,sigv);signal(SIGBUS,sigb);nan();H("sgi=>  ");}
+sgi(){H("sgi ");coreLimSet(0);/*signal(SIGCHLD,sigc);*/signal(SIGPIPE,SIG_IGN);
+ signal(SIGINT,sigi);signal(SIGSEGV,sigv);signal(SIGBUS,sigb);nan();H("sgi=> ");}
 Z mchk(n,a)A a;{I t=(I)a!=-1&&!a->c&&(t=a->t)<=Ct&&n>=AH+T(a->n);
  if(!t)H("not an `a object\n");R t;}
 #define MM 2000
@@ -54,7 +54,7 @@ wi(){H("wi ");
 #define mapf(f,o) (I)mmap(k1,k2,PROT_READ|PROT_WRITE,MAP_SHARED|MAP_FIXED,f,0)
 Z wsm(m){H("wsm ");I p=k1,z=(k+m+j-1)/j*k2;DO(j,flen(f[i],z))
  DO(m,if(-1==mapf(f[k%j],k2*(k/j)))R -1;++k;k1+=k2)H("wsm=> "); R p;}
-Z mal(n){H("mal n:%ld ",n);I p=(I)malloc(n);if(!p)perr("malloc");H("mal=> ");R p;}
+Z mal(n){H("mal n:%d ",n);I p=(I)malloc(n);if(!p)perr("malloc");H("mal=> ");R p;}
 Z tw;
 tmp(n){H("tmp "); int res;
  H("tmp->");I m,p=j||k?(m=1+(n-1)/k2,n=m*k2,wsm(m)):mal(n);
@@ -62,7 +62,7 @@ tmp(n){H("tmp "); int res;
 
 extern u_long MZ[];
 wa(k){I j,n=0,*p;tm(0);if(k>0)R tmp(k<<20);if(k==-2)mc();p=(I*)mz();
- DO(31,j=p[i];n+=j*MZ[i];if(k!=-1)H("%d ",j))if(k!=-1)H("n%u %u: ",tw,ep_all());H("%lu\n",n<<2);}
+ DO(31,j=p[i];n+=j*MZ[i];if(k!=-1)H("%ld ",j))if(k!=-1)H("n%u %u: ",tw,ep_all());H("%lu\n",n<<2);}
 
 twGet(){R tw;}
 ep_all(){I s=0;if(!j)R tw;DO(j,fstat(f[i],&b);s+=512*b.st_blocks)R s;}/*||*/

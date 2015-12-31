@@ -18,16 +18,16 @@ dc(a)A a; {H("dc ");
  if(QA(a)&&a){
   H("Tb:if(a->c):%ld ",a->c);
   if(a->c){H("--a->c||dec(a) ");--a->c||(H("dec->"),dec(a));}
-  else{ H("dc->");dm(a); } H("\n"); }
+  else{ H("dc->");dm(a); } }
  H("dc=> ");}
 
 dec(a)A a;{H("dec ");
- if(a->t<Et){int res=mf(a);H("dec=> ");R res;}
+ if(a->t<Et){H("dec->");int res=mf(a);H("dec=> ");R res;}
  if(a->t==Et)DO(a->n,dc(a->p[i]))
  else
   if(a->t==Xt)DO(a->r,dc(a->d[i]))
   else ef(*a->p),mf(a->p[a->n+1]);
- mf(a);}
+ mf(a); H("dec=> "); }
 
 ef(a)I a;{H("ef "); E e;I n;
  if(!QE(a)){H("ef->");int res=dc(a);H("ef=> ");R res;}
@@ -66,7 +66,7 @@ A gi(i)I i;GA(It,0,1,*z->p=i)A gs(t)GA(t,0,1,1) A gf(f)F f;GA(Ft,0,1,*(F*)z->p=f
  switch(M&z){\
   CS(0,H("EV->");ic(z))\
   CS(3,H("EV->");z=ee(XE(z)))\
-  CS(1,ic(z=gt(XV(z))))\
+  CS(1,H("EV->");ic(z=gt(XV(z))))\
   CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}\
  H("EV=> ");}
 

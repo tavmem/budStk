@@ -54,7 +54,7 @@ sk(){I *p=K,s,i=0;for(;*p;--p);for(;p++<K;)s=*p,
 Z u;Z in(){NL;DO(2*u,PC(' '))}
 pv(v)V v;{H(" %s",v->s->n);}
 
-pa(v)V v;{paf(v,0);}
+pa(v)V v;{H("pa pa->");paf(v,0);H("pa=> ");}
 
 Z C b[30];C Fs[]=" %.10g";
 Z bd(){I i=0;for(;b[i]&&b[i]!='.'&&b[i]!='e';++i);R i;}

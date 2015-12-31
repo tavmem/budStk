@@ -59,9 +59,8 @@ C **argv;
        argvInstall(argc, argv, i);                 /* set up _argv */
        if (i < argc && argv[i] && * argv[i])
                loadafile(argv[i],0);               /* load script */
-       H("main->getm\n");
-       if (Tf) pr();                               /* initial prompt */
-       for (;;) getm();                            /* main loop */
+       if (Tf) H("main->"),pr();                   /* initial prompt */
+       for (;;) {H("main->");getm();}              /* main loop */
 }
 
 Z I parseargs(argc, argv)
@@ -173,6 +172,7 @@ void disable (){m&=~1;}
 void enable(){m|=1;}
 
 /* MAIN LOOP BODY */
-Z void getm(){I n=m;
- if(-1==select(32,&n,0,0,0)&&Tf)NL,sbi(),pr();else if (n&1){H("getm->");tf();}}
+Z void getm(){H("getm ");I n=m;
+ if(-1==select(32,&n,0,0,0)&&Tf)NL,H("getm->"),sbi(),H("getm->"),pr();
+ else if (n&1){H("getm->");tf();}}
 
