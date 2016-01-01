@@ -63,7 +63,9 @@ C *s1(s)C *s;{for(;isan(*++s)||*s=='l';);R s;}
 C *cl(s)C *s;{H("cl ");for(;s=c0(s),*s=='\343';)for(;*++s&&*s!='\n';);H("cl=> ");R s;}
 C *bl(s)C *s;{for(;*s&&!issp(*s);++s);R s;}
 /*pt(u,t)I *u,*t;{I i;for(;u<t;)ispu(i=*u++)?H("%c",i):pa(i);H("^\n");}*/
-tc(t)I *t;{for(;t>tb;)if(!ispu(*--t))dc(*t);longjmp(J,-2);}
+
+tc(t)I *t;{for(;t>tb;)if(!ispu(*--t))dc(*t);H("tc**LJ**=> ");longjmp(J,-2);}
+
 Z C *ts[]={"wsfull","stack","undEfined","MAX args: 9","( nesting too deep"};
 Z trr(q,s)C *s;{H("trr ");if(!G)H("TOKEN: %s %s\n",q==2?s:"",ts[q]);tc(t);}
 Z brr(c){if(!G)H("TOKEN: open %c\n",c);tc(tb);}
@@ -146,7 +148,7 @@ C *nx(t)C *t;{R s=t,bal(1),s;}
 
 Z de(){H("de de->"); I a=exm(s,APL);
  H("\na:%lu q:%lu J:%lu (q==-1&&J):%u\n",a,q,J,(1==-1&&J));
- if(q==-1&&J)u--,longjmp(J,-1);
+ if(q==-1&&J)H("de**LG**=> "),u--,longjmp(J,-1);
  q=0;
  if(a) {
   H("de->");ff(a);
@@ -170,13 +172,12 @@ Z go(){H("go "); I r;
  H("go->");s=cl(b=sb);
  if(!*s){H("go=> ");R 0;}
  if((r=*s=='\373'||*s==':')||!s[1]&&(*s=='\375'||*s=='$')){
-  H("goC: in-if\n");
   if(!J){H("go=> ");R u;}
   if(r){
    if(!s[1])R 1;
-   r=exm(s+1,APL);
+   H("go->");r=exm(s+1,APL);
    if(!r)R q=0;}
-  --u,longjmp(J,r?r:-3);}
+  H("go**LG**=> "),--u,longjmp(J,r?r:-3);}
  R H("go->"),de(),H("go=> "),0; }
 
 Z C *scp(s)C *s;{H("scp scp->");C *res=strcpy(mab(1+strlen(s)),s);H("res:%s scp=> ",res);R res;}
@@ -195,11 +196,12 @@ ui(){H("ui ");
  if(*X){
   A f=(A)*X;
   Cx=(CX)f->p[f->n+2];}
-  for(*++K=0,H("ui->"),++u,pr();H("ui->"),!tf(););
-  H("err=> ");R Cx=c,--u,--K,0;}
+ for(*++K=0,H("ui->"),++u,pr();H("ui->"),!tf(););
+ H("ui=> ");R Cx=c,--u,--K,0;}
 
 Z C *es[]={"stop","interrupt","wsfull","stack","value","valence","type","rand",
  "length","domain","index","mismatch","nonce","maxrank","non-function","parse","maxitems","invalid"};
+
 xrr(){if(q>0)qs=es[q];q=0;}
 
 Z prr(i,a)A a;{H("prr ");
@@ -212,7 +214,7 @@ Z prr(i,a)A a;{H("prr ");
 C *qs;
 
 err(i,a){H("err ");
- q=i;if(!Ef||G&&i)longjmp(J,-3);
+ q=i;if(!Ef||G&&i)H("err**LG**=> "),longjmp(J,-3);
  Tf=1;
  stdinFlagSet(Tf);
  H("err->");prr(i,a);
@@ -224,16 +226,19 @@ perr(s){perror(s),fflush(stdout);}
 Z tok(){H("tok ");
  jmp_buf b;
  CX c=Cx;
- I *j=J,*k=K,z;
- if(setjmp(J=b))z=0;
+ I *j=J,*k=K,z,i;
+ i=setjmp(J=b); H("tok**SJ:%ld** ",i);
+ if(i)z=0;
  else {H("tok->");int res=bal(0);H("tok->");z=ra(res);}
  H("t:%lu *t:%lu b:%s z:%lu tok=> ",t,*t,b,z);
  R K=k,Cx=c,J=j,z;}
 
 ez(a){H("ez ");
  jmp_buf b;I *j=J,*k=K,*x=X,*y=Y,i;CX c=Cx;
- if(i=setjmp(J=b)){Cx=c;
- for(J=j,K=k,X=x;Y<y;)dc(*Y++);R q?0:i!=-3?i:0;}
+ i=setjmp(J=b); H("ez**SJ:%ld** ",i);if(i){
+  Cx=c;
+  for(J=j,K=k,X=x;Y<y;){H("ez->");dc(*Y++);}
+  H("ez=> ");R q?0:i!=-3?i:0;}
  H("ez->"),a=ev(a);
  H("ez=> ");R J=j,a; }
 
@@ -250,7 +255,7 @@ exm(a,m)C *a;{ H("exm ");
  if(QE(e)&&XE(e)->f==MN(0))R H("exm->"),dc(z),H("exm=> "),nl;
  else R H("z:%lu exm=> ",z),z; }
 
-extern I Gf,Sf;pev(a){I g=G;A z;G=Gf,a=ez(a),G=g;if(!a&&!q)longjmp(J,-3);
+extern I Gf,Sf;pev(a){I g=G;A z;G=Gf,a=ez(a),G=g;if(!a&&!q)H("pev**LG**=> "),longjmp(J,-3);
  z=gv(Et,2);*z->p=(I)gi(q);z->p[1]=q?gsv(0,q<0?qs:es[q]):a;R q=0,(I)z;}
 pexm(a,m){I g=G;A z;R G=Gf,a=exm(a,m),G=g,a?(z=gs(Et),*z->p=a):(z=gi(q),q=0),(I)z;}
 /* old entrypoints pex() and ex() included for compatibility with a_79 */
@@ -267,8 +272,8 @@ af(n)I n;{jmp_buf b;A f=(A)*Y;I i,*k,t,*j,*x,z,h=f->t==Xt;E e;if(h){I *d=f->d,i;
  for(h=i=f->r;i--;*--Y=ic(d[i]));L0:f=(A)*Y;}
  if(f->t<=Xt)q=14;else if(Y-K<30)q=3;else if(n+h!=f->r)q=5;else if(!*f->p)q=r;
  else{CX c=Cx;x=X,X=Y,j=J,k=K,*++K=(I)f;DO(f->n-1,*--Y=0)FIN;
-  if(z=setjmp(J=b)){if(z==-3){FOUT;longjmp(j,-3);}}else z=ev(*f->p);
+  z=setjmp(J=b);H("af**SJ:%ld** ",z);if(z){if(z==-3){FOUT;H("af**LG**=> ");longjmp(j,-3);}}else z=ev(*f->p);
   for(;Y<X;dc(*Y++));K=k,J=j,X=x;}
  L:if(q)if(z=err(q,f),!z)goto L0;DO(h,dc(*Y++))FOUT;R z;}
-H1(sg){if(qz(a))longjmp(J,-3);qs=(C*)cs(a);Q(!qs||!a->c,9)longjmp(J,q=-1);}
+H1(sg){if(qz(a))H("sg**LG**=> "),longjmp(J,-3);qs=(C*)cs(a);Q(!qs||!a->c,9)H("sg**LG**=> ");longjmp(J,q=-1);}
 frep(f)A f;{strcpy(f->p[f->n+1]=(I)mab(1+strlen(r)),r);}
