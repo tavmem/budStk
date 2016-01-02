@@ -91,7 +91,7 @@ H1(mth){H("mth ");
  H("r:%ld mth=> ",(I)z);R(I)z;}
 
 paf(a,f)A a; {
-  H("paf (I)a:%ld f:%d q:%ld switch(M&(I)a):%ld\n",(I)a,f,q,(M&(I)a));
+  H("paf (I)a:%lu f:%d q:%lu switch(M&(I)a):%ld\n",(I)a,f,q,(M&(I)a));
   I t; CX cx; BRK
   switch(M&(I)a) {
     case 4:if(U(a)>9)goto L;    case 2:    case 6:

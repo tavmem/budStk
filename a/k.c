@@ -66,7 +66,7 @@ A gi(i)I i;GA(It,0,1,*z->p=i)A gs(t)GA(t,0,1,1) A gf(f)F f;GA(Ft,0,1,*(F*)z->p=f
  switch(M&z){\
   CS(0,H("EV->");ic(z))\
   CS(3,H("EV->");z=ee(XE(z)))\
-  CS(1,H("EV->");ic(z=gt(XV(z)));H("EV=> ");)\
+  CS(1,H("EV->");ic(z=gt(XV(z))))\
   CS(5,for(;!(t=X[U(z)]);)err(4,z);ic(z=t))}\
  H("EV=> ");}
 
