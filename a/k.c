@@ -14,7 +14,7 @@ ic(a)A a;{H("ic ");
        else{H("ic=> ");R im(a);} } }
 
 dc(a)A a; {H("dc ");
- //if(QA(a)&&a)a->c?H("dc->"),--a->c||dec(a):H("dc->"),dm(a);    /*something wrong, calls dm*/
+ //if(QA(a)&&a)a->c?--a->c||dec(a):dm(a);    /* something wrong, calls dm after t:=3 */
  H("\n\nTa:if(QA(a)&&a):%u (I)(a)&M:%lu QA(a):%d (I)a:%lu)\n",QA(a)&&a,(I)(a)&M,QA(a),(I)a);
  if(QA(a)&&a){
   H("Tb:if(a->c):%ld ",a->c);
